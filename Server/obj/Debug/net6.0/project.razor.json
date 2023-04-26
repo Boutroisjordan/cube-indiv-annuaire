@@ -6608,85 +6608,6 @@
         }
       },
       {
-        "HashCode": -946041759,
-        "Kind": "Components.Component",
-        "Name": "BlazorApp.Client.Shared.Components.Modal.ModalUpdateServiceComponent",
-        "AssemblyName": "BlazorApp.Client",
-        "CaseSensitive": true,
-        "TagMatchingRules": [
-          {
-            "TagName": "ModalUpdateServiceComponent"
-          }
-        ],
-        "BoundAttributes": [
-          {
-            "Kind": "Components.Component",
-            "Name": "OnServiceCreated",
-            "TypeName": "Microsoft.AspNetCore.Components.EventCallback",
-            "Metadata": {
-              "Common.PropertyName": "OnServiceCreated",
-              "Common.GloballyQualifiedTypeName": "global::Microsoft.AspNetCore.Components.EventCallback",
-              "Components.EventCallback": "True"
-            }
-          },
-          {
-            "Kind": "Components.Component",
-            "Name": "serviceModel",
-            "TypeName": "BlazorApp.Shared.Models.Service",
-            "Metadata": {
-              "Common.PropertyName": "serviceModel",
-              "Common.GloballyQualifiedTypeName": "global::BlazorApp.Shared.Models.Service"
-            }
-          }
-        ],
-        "Metadata": {
-          "Runtime.Name": "Components.IComponent",
-          "Common.TypeName": "BlazorApp.Client.Shared.Components.Modal.ModalUpdateServiceComponent",
-          "Common.TypeNamespace": "BlazorApp.Client.Shared.Components.Modal",
-          "Common.TypeNameIdentifier": "ModalUpdateServiceComponent"
-        }
-      },
-      {
-        "HashCode": 1493355564,
-        "Kind": "Components.Component",
-        "Name": "BlazorApp.Client.Shared.Components.Modal.ModalUpdateServiceComponent",
-        "AssemblyName": "BlazorApp.Client",
-        "CaseSensitive": true,
-        "TagMatchingRules": [
-          {
-            "TagName": "BlazorApp.Client.Shared.Components.Modal.ModalUpdateServiceComponent"
-          }
-        ],
-        "BoundAttributes": [
-          {
-            "Kind": "Components.Component",
-            "Name": "OnServiceCreated",
-            "TypeName": "Microsoft.AspNetCore.Components.EventCallback",
-            "Metadata": {
-              "Common.PropertyName": "OnServiceCreated",
-              "Common.GloballyQualifiedTypeName": "global::Microsoft.AspNetCore.Components.EventCallback",
-              "Components.EventCallback": "True"
-            }
-          },
-          {
-            "Kind": "Components.Component",
-            "Name": "serviceModel",
-            "TypeName": "BlazorApp.Shared.Models.Service",
-            "Metadata": {
-              "Common.PropertyName": "serviceModel",
-              "Common.GloballyQualifiedTypeName": "global::BlazorApp.Shared.Models.Service"
-            }
-          }
-        ],
-        "Metadata": {
-          "Runtime.Name": "Components.IComponent",
-          "Common.TypeName": "BlazorApp.Client.Shared.Components.Modal.ModalUpdateServiceComponent",
-          "Common.TypeNamespace": "BlazorApp.Client.Shared.Components.Modal",
-          "Common.TypeNameIdentifier": "ModalUpdateServiceComponent",
-          "Components.NameMatch": "Components.FullyQualifiedNameMatch"
-        }
-      },
-      {
         "HashCode": -2090963455,
         "Kind": "Components.Component",
         "Name": "BlazorApp.Client.Shared.Components.Modal.ModalComponent",
@@ -7044,6 +6965,85 @@
         }
       },
       {
+        "HashCode": -946041759,
+        "Kind": "Components.Component",
+        "Name": "BlazorApp.Client.Shared.Components.Modal.ModalUpdateServiceComponent",
+        "AssemblyName": "BlazorApp.Client",
+        "CaseSensitive": true,
+        "TagMatchingRules": [
+          {
+            "TagName": "ModalUpdateServiceComponent"
+          }
+        ],
+        "BoundAttributes": [
+          {
+            "Kind": "Components.Component",
+            "Name": "OnServiceCreated",
+            "TypeName": "Microsoft.AspNetCore.Components.EventCallback",
+            "Metadata": {
+              "Common.PropertyName": "OnServiceCreated",
+              "Common.GloballyQualifiedTypeName": "global::Microsoft.AspNetCore.Components.EventCallback",
+              "Components.EventCallback": "True"
+            }
+          },
+          {
+            "Kind": "Components.Component",
+            "Name": "serviceModel",
+            "TypeName": "BlazorApp.Shared.Models.Service",
+            "Metadata": {
+              "Common.PropertyName": "serviceModel",
+              "Common.GloballyQualifiedTypeName": "global::BlazorApp.Shared.Models.Service"
+            }
+          }
+        ],
+        "Metadata": {
+          "Runtime.Name": "Components.IComponent",
+          "Common.TypeName": "BlazorApp.Client.Shared.Components.Modal.ModalUpdateServiceComponent",
+          "Common.TypeNamespace": "BlazorApp.Client.Shared.Components.Modal",
+          "Common.TypeNameIdentifier": "ModalUpdateServiceComponent"
+        }
+      },
+      {
+        "HashCode": 1493355564,
+        "Kind": "Components.Component",
+        "Name": "BlazorApp.Client.Shared.Components.Modal.ModalUpdateServiceComponent",
+        "AssemblyName": "BlazorApp.Client",
+        "CaseSensitive": true,
+        "TagMatchingRules": [
+          {
+            "TagName": "BlazorApp.Client.Shared.Components.Modal.ModalUpdateServiceComponent"
+          }
+        ],
+        "BoundAttributes": [
+          {
+            "Kind": "Components.Component",
+            "Name": "OnServiceCreated",
+            "TypeName": "Microsoft.AspNetCore.Components.EventCallback",
+            "Metadata": {
+              "Common.PropertyName": "OnServiceCreated",
+              "Common.GloballyQualifiedTypeName": "global::Microsoft.AspNetCore.Components.EventCallback",
+              "Components.EventCallback": "True"
+            }
+          },
+          {
+            "Kind": "Components.Component",
+            "Name": "serviceModel",
+            "TypeName": "BlazorApp.Shared.Models.Service",
+            "Metadata": {
+              "Common.PropertyName": "serviceModel",
+              "Common.GloballyQualifiedTypeName": "global::BlazorApp.Shared.Models.Service"
+            }
+          }
+        ],
+        "Metadata": {
+          "Runtime.Name": "Components.IComponent",
+          "Common.TypeName": "BlazorApp.Client.Shared.Components.Modal.ModalUpdateServiceComponent",
+          "Common.TypeNamespace": "BlazorApp.Client.Shared.Components.Modal",
+          "Common.TypeNameIdentifier": "ModalUpdateServiceComponent",
+          "Components.NameMatch": "Components.FullyQualifiedNameMatch"
+        }
+      },
+      {
         "HashCode": -1935769657,
         "Kind": "Components.Component",
         "Name": "BlazorApp.Client.Shared.Components.Toast.ToastComponent",
@@ -7305,39 +7305,39 @@
         }
       },
       {
-        "HashCode": 22939172,
+        "HashCode": 525961809,
         "Kind": "Components.Component",
-        "Name": "BlazorApp.Client.Pages.FetchSites",
+        "Name": "BlazorApp.Client.App",
         "AssemblyName": "BlazorApp.Client",
         "CaseSensitive": true,
         "TagMatchingRules": [
           {
-            "TagName": "FetchSites"
+            "TagName": "App"
           }
         ],
         "Metadata": {
           "Runtime.Name": "Components.IComponent",
-          "Common.TypeName": "BlazorApp.Client.Pages.FetchSites",
-          "Common.TypeNamespace": "BlazorApp.Client.Pages",
-          "Common.TypeNameIdentifier": "FetchSites"
+          "Common.TypeName": "BlazorApp.Client.App",
+          "Common.TypeNamespace": "BlazorApp.Client",
+          "Common.TypeNameIdentifier": "App"
         }
       },
       {
-        "HashCode": 196366717,
+        "HashCode": 1142149968,
         "Kind": "Components.Component",
-        "Name": "BlazorApp.Client.Pages.FetchSites",
+        "Name": "BlazorApp.Client.App",
         "AssemblyName": "BlazorApp.Client",
         "CaseSensitive": true,
         "TagMatchingRules": [
           {
-            "TagName": "BlazorApp.Client.Pages.FetchSites"
+            "TagName": "BlazorApp.Client.App"
           }
         ],
         "Metadata": {
           "Runtime.Name": "Components.IComponent",
-          "Common.TypeName": "BlazorApp.Client.Pages.FetchSites",
-          "Common.TypeNamespace": "BlazorApp.Client.Pages",
-          "Common.TypeNameIdentifier": "FetchSites",
+          "Common.TypeName": "BlazorApp.Client.App",
+          "Common.TypeNamespace": "BlazorApp.Client",
+          "Common.TypeNameIdentifier": "App",
           "Components.NameMatch": "Components.FullyQualifiedNameMatch"
         }
       },
@@ -7660,39 +7660,39 @@
         }
       },
       {
-        "HashCode": 525961809,
+        "HashCode": 22939172,
         "Kind": "Components.Component",
-        "Name": "BlazorApp.Client.App",
+        "Name": "BlazorApp.Client.Pages.FetchSites",
         "AssemblyName": "BlazorApp.Client",
         "CaseSensitive": true,
         "TagMatchingRules": [
           {
-            "TagName": "App"
+            "TagName": "FetchSites"
           }
         ],
         "Metadata": {
           "Runtime.Name": "Components.IComponent",
-          "Common.TypeName": "BlazorApp.Client.App",
-          "Common.TypeNamespace": "BlazorApp.Client",
-          "Common.TypeNameIdentifier": "App"
+          "Common.TypeName": "BlazorApp.Client.Pages.FetchSites",
+          "Common.TypeNamespace": "BlazorApp.Client.Pages",
+          "Common.TypeNameIdentifier": "FetchSites"
         }
       },
       {
-        "HashCode": 1142149968,
+        "HashCode": 196366717,
         "Kind": "Components.Component",
-        "Name": "BlazorApp.Client.App",
+        "Name": "BlazorApp.Client.Pages.FetchSites",
         "AssemblyName": "BlazorApp.Client",
         "CaseSensitive": true,
         "TagMatchingRules": [
           {
-            "TagName": "BlazorApp.Client.App"
+            "TagName": "BlazorApp.Client.Pages.FetchSites"
           }
         ],
         "Metadata": {
           "Runtime.Name": "Components.IComponent",
-          "Common.TypeName": "BlazorApp.Client.App",
-          "Common.TypeNamespace": "BlazorApp.Client",
-          "Common.TypeNameIdentifier": "App",
+          "Common.TypeName": "BlazorApp.Client.Pages.FetchSites",
+          "Common.TypeNamespace": "BlazorApp.Client.Pages",
+          "Common.TypeNameIdentifier": "FetchSites",
           "Components.NameMatch": "Components.FullyQualifiedNameMatch"
         }
       },
