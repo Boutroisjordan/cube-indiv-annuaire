@@ -1,0 +1,92 @@
+﻿@page "/salariers/{id}"
+@using BlazorApp.Shared.Models
+@using Microsoft.AspNetCore.WebUtilities
+@inject HttpClient Http
+@inject NavigationManager NavigationManager
+
+
+<a href="salariers" class="btn btn-secondary">
+   <span class="oi oi-arrow-thick-left" ></span>
+   Retour
+</a>
+<h1> ID du salarier @Id</h1>
+
+@if (salarier is null)
+{
+    <p><em>Loading... </em></p>
+}
+else
+{
+    <div class="container-fluid">
+		<h1 class="text-center">Détails de l'employé</h1>
+		<hr />
+
+		<div class="row">
+			<div class="col-md-6">
+				<h3>Informations personnelles</h3>
+				<hr />
+				<dl class="row">
+					<dt class="col-sm-3">Nom complet</dt>
+					<dd class="col-sm-9">@salarier.last_name @salarier.first_name</dd>
+
+
+					<dt class="col-sm-3">Email</dt>
+					<dd class="col-sm-9">@salarier.email</dd>
+
+					<dt class="col-sm-3">Téléphone fixe</dt>
+					<dd class="col-sm-9">@salarier.fixPhone</dd>
+
+					<dt class="col-sm-3">téléphone portable</dt>
+					<dd class="col-sm-9">@salarier.portablePhone</dd>
+
+
+				</dl>
+			</div>
+
+			@* <div class="col-md-6">
+				<h3>Informations professionnelles</h3>
+				<hr />
+				<dl class="row">
+					<dt class="col-sm-3">Poste</dt>
+					<dd class="col-sm-9">Poste</dd>
+
+					<dt class="col-sm-3">Département</dt>
+					<dd class="col-sm-9">dos</dd>
+
+					<dt class="col-sm-3">Date d'embauche</dt>
+					<dd class="col-sm-9">tres</dd>
+
+                    <dt class="col-sm-3">Service</dt>
+					<dd class="col-sm-9">
+                        @salarier.service?.Name
+                    </dd>
+				</dl>
+			</div> *@
+		</div>
+	</div>
+
+
+}
+
+@* <a href="@($"/salariers/{salarier?.Id - 1}")">Previous</a>
+<a href="@($"/salariers/{salarier?.Id + 1}")">Next</a> *@
+
+@code {
+    [Parameter]
+    public string? Id { get; set; }
+    private Salarier? salarier;
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        @* salarier = await Http.GetFromJsonAsync<Salarier>($"api/salariers/{Id}"); *@
+          var result = await Http.GetAsync($"api/Salarier/{Id}");
+
+        if (result.IsSuccessStatusCode)
+        {
+
+            var salarierResult = await result.Content.ReadFromJsonAsync<Salarier>();
+            salarier = salarierResult;
+        } 
+    }
+}

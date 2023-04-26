@@ -1,0 +1,100 @@
+@inject IJSRuntime JsRuntime;
+
+<h3>ModalComponent</h3>
+
+<button type="button" class="btn btn-primary" id="liveToastBtn">Show live toast</button>
+@* @if(@ModalMessage != null)
+{
+<!-- Modal -->
+<div @ref="modalRef" class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" >
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        @ModalMessage.Message
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+} *@
+
+@if( modalType == "salarier")
+{
+<!-- Modal -->
+<div @ref="modalRef" class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" >
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+            <form>
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="first_name">Prénom</label>
+            <input type="text" class="form-control" id="first_name" name="first_name" placeholder="Prénom">
+          </div>
+          <div class="form-group">
+            <label for="last_name">Nom</label>
+            <input type="text" class="form-control" id="last_name" name="last_name" placeholder="Nom">
+          </div>
+          <div class="form-group">
+            <label for="phone">Téléphone</label>
+            <input type="tel" class="form-control" id="phone" name="phone" placeholder="Téléphone">
+          </div>
+          <div class="form-group">
+            <label for="portablePhone">Téléphone portable</label>
+            <input type="tel" class="form-control" id="portablePhone" name="portablePhone" placeholder="Téléphone portable">
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" class="form-control" id="email" name="email" placeholder="Email">
+          </div>
+          <div class="form-group">
+            <label for="site">Site</label>
+            <select class="form-control" id="site" name="site">
+              <option value="site1">Site 1</option>
+              <option value="site2">Site 2</option>
+              <option value="site3">Site 3</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="service">Service</label>
+            <select class="form-control" id="service" name="service">
+              <option value="service1">Service 1</option>
+              <option value="service2">Service 2</option>
+              <option value="service3">Service 3</option>
+            </select>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+          <button type="submit" class="btn btn-primary">Enregistrer</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+}
+
+
+
+@code {
+
+  ElementReference modalRef;
+  [Parameter]
+  public ModalMessage ModalMessage {get; set;} = new ModalMessage("Le message");
+  [Parameter]
+  public string? modalType {get; set;}
+  public async void ShowModal()
+  {
+    await JsRuntime.InvokeVoidAsync("ShowModal", modalRef);
+  }
+}

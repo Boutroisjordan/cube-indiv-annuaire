@@ -1,0 +1,136 @@
+﻿@page "/salariers"
+@using BlazorApp.Shared.Models
+@inject HttpClient Http
+@attribute [Authorize]
+
+
+<PageTitle>Salariers</PageTitle>
+
+<h1>Les salariers</h1>
+
+
+
+@if (salariers is null)
+{
+    @if (!string.IsNullOrEmpty(FetchErrorMessage))
+    {
+   @FetchErrorMessage
+   <button @onclick="ShowModal" type="button" class="btn btn-primary">
+  <span class="iconify" data-icon="bx:bx-plus"></span> Ajouter
+</button>
+    } else {
+
+    <p><em>Loading... </em></p>
+    }
+} else {
+    <button @onclick="ShowModal" type="button" class="btn btn-primary">
+  <span class="iconify" data-icon="bx:bx-plus"></span> Ajouter
+</button>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>first name</th>
+                <th>last name</th>
+                <th>email</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var salarier in salariers)
+            {
+                <tr>
+                    <td>@salarier.Id</td>
+                    <td>@salarier.first_name</td>
+                    <td>@salarier.last_name</td>
+                    <td>@salarier.email</td>
+                    <td>
+                         <button @onclick="async () => await Delete(salarier)" type="button" class="btn btn-danger">Delete</button> 
+                         @* <a href="salariers/@(salarier.Id)">View more</a> *@
+                         <a href="@($"/salariers/{salarier.Id}")">View Details</a>
+                        @* <button type="button" class="btn btn-danger">Delete</button> *@
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+
+
+}
+<ModalCreateSalarierComponent @ref="modal" modalType="salarier" OnSalarierCreated="RefreshSalariers" />
+
+@code {
+    private Salarier[]? salariers;
+    private string? errorMessage;
+    private string? successMessage;
+    private ModalCreateSalarierComponent? modal;
+
+
+    private string? FetchErrorMessage {get; set;}
+
+    private ToastMessage Message = new ToastMessage("test", "test", DateTime.Now);
+    private ToastComponent? toast;
+
+    protected override async Task OnInitializedAsync()
+    {
+         var result = await Http.GetAsync("api/Salarier");
+
+        if (result.IsSuccessStatusCode)
+        
+        {
+            if(result.StatusCode.ToString() == "NoContent") {
+            FetchErrorMessage = "No content";
+            } else {
+
+            var sitesResult = await result.Content.ReadFromJsonAsync<Salarier[]>();
+            salariers = sitesResult;
+            }
+
+        } else {
+        }
+
+    }
+
+    private async Task Delete(Salarier salarier)
+    {
+        var response = await Http.DeleteAsync($"api/Salarier/{salarier.Id}");
+
+        if (response.IsSuccessStatusCode)
+        {
+
+            var result = await response.Content.ReadFromJsonAsync<Salarier>();
+            if(result != null) {
+                Message = new ToastMessage("Success", $"{salarier.email} a été supprimer avec succès", DateTime.Now);
+
+                // Mettre à jour localement la liste des salariers après la suppression
+                salariers = salariers?.Where(s => s.Id != salarier.Id).ToArray();
+                toast?.ShowToast();
+
+            }
+        }
+        else
+        {
+            errorMessage = await response.Content.ReadAsStringAsync();
+            Message = new ToastMessage("Error", $"{errorMessage}", DateTime.Now);
+            toast?.ShowToast();
+        }
+    }
+
+    private void ShowModal()
+    {
+        modal?.ShowModal();
+    }
+
+    private async Task RefreshSalariers()
+    {
+        var result = await Http.GetAsync("api/Salarier");
+
+        if (result.IsSuccessStatusCode)
+        {
+            var salarierResult = await result.Content.ReadFromJsonAsync<Salarier[]>();
+            salariers = salarierResult;
+        }
+    }
+}
+

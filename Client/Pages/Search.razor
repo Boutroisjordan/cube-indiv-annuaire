@@ -1,0 +1,261 @@
+﻿@page "/search"
+@using System.Linq
+@using BlazorApp.Shared.Models
+@inject HttpClient Http
+
+
+
+<h1>Recherche de salariers</h1>
+<p>SearchTerm @searchTerm</p>
+<div class="row">
+    <div class="col-sm-6">
+        @* <input type="text" class="form-control" placeholder="Recherche par nom" @bind-value="@searchTerm" @bind-value:event="oninput" onchange="@(() => Rechercher())"/> *@
+        <input type="search" class="form-control" placeholder="Recherche par nom" @oninput="OnChangeSearchBar" />
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-6">
+        <h4>Sites</h4>
+        @if(sites != null) {
+            <p>Choix site ID: @selectedSite</p>
+            @* <div class="form-check">
+
+                <label class="form-check-label">All</label>
+                <input class="form-check-input" type="radio" name="siteRadio" value="0" @onchange="@(e => HandleSiteChange(0))" checked/>
+            </div> *@
+            <select class="form-select" aria-label="Default select example" @onchange="HandleSiteChange">
+                <option value="0" selected>All</option>
+        @foreach (var site in sites)
+        {
+            @* <div class="form-check">
+                <label class="form-check-label">@site.Name</label>
+                <input class="form-check-input" type="radio" name="siteRadio" value="@site.Id" @onchange="@(e => HandleSiteChange(site.Id))" />
+            </div> *@
+              <option value="@site.Id">@site.Name</option>
+
+        }
+</select>
+
+        }
+    </div>
+    <div class="col-sm-6">
+        <h4>Services</h4>
+        @if(services != null) {
+          
+
+            <p>Choix service ID: @selectedService</p>
+            @* <div class="form-check">
+                <label class="form-check-label">All</label>
+                <input class="form-check-input" type="radio" name="serviceRadio" value="0" @onchange="@(e => HandleServiceChange(0))" checked/>
+            </div> *@
+            <select class="form-select" aria-label="Default select example" @onchange="HandleServiceChange">
+                <option value="0" selected>All</option>
+        @foreach (var service in services)
+        {
+            @* <div class="form-check">
+                <input class="form-check-input" type="radio" name="serviceRadio" value="@service.Id" @onchange="@(e => HandleServiceChange(service.Id))" />
+                <label class="form-check-label">@service.Name</label>
+            </div> *@
+              <option value="@service.Id">@service.Name</option>
+
+        }
+</select>
+
+        }
+        @* @if(services != null) {
+            
+            <p>Choix service ID: @selectedService</p>
+            <div class="form-check">
+                <label class="form-check-label">All</label>
+                <input class="form-check-input" type="radio" name="serviceRadio" value="0" @onchange="@(e => HandleServiceChange(0))" checked/>
+            </div>
+
+        @foreach (var service in services)
+        {
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="serviceRadio" value="@service.Id" @onchange="@(e => HandleServiceChange(service.Id))" />
+                <label class="form-check-label">@service.Name</label>
+            </div>
+        }
+        } *@
+    </div>
+</div>
+
+<hr />
+
+@if (filteredSalarier != null && filteredSalarier.Count > 0)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
+                <th>Site</th>
+                <th>Service</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if(filteredSalarier != null) {
+            @foreach (var salarier in filteredSalarier)
+            {
+                <tr>
+                    <td>@salarier.first_name</td>
+                    <td>@salarier.last_name</td>
+                    <td>@salarier.email</td>
+                    @if(salarier.site != null) {
+
+                    <td>@salarier.site.Name</td>
+                    }
+                    @if(salarier.service != null) {
+
+                    <td>@salarier.service.Name</td>
+                    }
+                </tr>
+            }
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>Aucun salarié ne correspond aux critères de recherche.</p>
+}
+
+@code {
+    private List<Salarier>? salarierList = new List<Salarier>();
+    private List<Salarier>? filteredSalarier = new List<Salarier>();
+    private List<Site>? sites = new List<Site>();
+    private List<Service>? services = new List<Service>();
+    private string? searchTerm = "";
+    private int? selectedSite = 0;
+    private int? selectedService = 0;
+
+    protected override async Task OnInitializedAsync()
+    {
+        // Charger la liste de tous les salariers
+        salarierList = await LoadSalarierAsync();
+
+        filteredSalarier = salarierList;
+
+        // Charger la liste de tous les sites
+        sites = await LoadSitesAsync();
+
+        // Charger la liste de tous les services
+        services = await LoadServicesAsync();
+    }
+
+    private async Task<List<Salarier>?> LoadSalarierAsync()
+    {
+        // Appeler l'API pour charger la liste des salariers
+        // et la stocker dans une liste
+        // ...
+        var resultSalarier = await Http.GetAsync("api/Salarier");
+
+        if (resultSalarier.IsSuccessStatusCode)
+        {
+            var salariersData = await resultSalarier.Content.ReadFromJsonAsync<List<Salarier>>();
+            @* Salariers = salariersData; *@
+            return salariersData;
+        }else {
+            return new List<Salarier>();
+        }
+    }
+
+    private async Task<List<Site>?> LoadSitesAsync()
+    {
+        // Appeler l'API pour charger la liste des sites
+        // et
+        var resultSites = await Http.GetAsync("api/Site");
+
+        if (resultSites.IsSuccessStatusCode)
+        {
+            var sitesData = await resultSites.Content.ReadFromJsonAsync<List<Site>>();
+            sites = sitesData;
+            return sitesData;
+        }else {
+            return new List<Site>();
+        }
+    }
+    private async Task<List<Service>?> LoadServicesAsync()
+    {
+        var resultService = await Http.GetAsync("api/Service");
+        if (resultService.IsSuccessStatusCode)
+        {
+            var servicesData = await resultService.Content.ReadFromJsonAsync<List<Service>>();
+            @* services = servicesData; *@
+            return servicesData;
+        } else {
+            return new List<Service>();
+        }
+
+    }
+     private void OnChangeSearchBar(ChangeEventArgs e)
+    {
+        searchTerm = e.Value?.ToString();
+        Rechercher();
+    }
+
+     private void Rechercher()
+    {
+        if(salarierList != null) {
+
+        filteredSalarier = salarierList
+            .Where(s => s.first_name != null && s.first_name.ToLower().Contains(searchTerm.ToLower()))
+            .ToList();
+        }
+
+        if(filteredSalarier != null) {
+
+                if (selectedSite > 0)
+                {
+                    filteredSalarier = filteredSalarier
+                        .Where(s => s.site != null && s.site.Id == selectedSite)
+                        .ToList();
+                }
+
+                if (selectedService > 0)
+                {
+                    filteredSalarier = filteredSalarier
+                        .Where(s => s.service != null && s.service.Id == selectedService)
+                        .ToList();
+                }
+
+                filteredSalarier = filteredSalarier
+                    .OrderBy(s => s.first_name)
+                    .ToList();
+        }
+    }
+
+
+
+    private void HandleSiteChange(ChangeEventArgs e) {
+        string? siteValue = e.Value?.ToString();
+        if(siteValue != null) {
+
+        selectedSite = int.Parse(siteValue);
+        }
+        Rechercher();
+    }
+    @* private void HandleSiteChange(int siteId) {
+        selectedSite = siteId;
+        Rechercher();
+    } *@
+
+    public void HandleServiceChange(ChangeEventArgs e) {
+        
+        string? serviceValue = e.Value?.ToString();
+        if(serviceValue != null) {
+
+        selectedService = int.Parse(serviceValue);
+        }
+        Rechercher();
+    }
+    @* private void HandleServiceChange(int serviceId) {
+        selectedService = serviceId;
+        Rechercher();
+    } *@
+}
+
+ 

@@ -1,0 +1,40 @@
+@inject IJSRuntime JsRuntime;
+
+@if(@ToastMessage != null)
+{
+  <div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div id="liveToast" @ref="toastRef" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+      <div class="toast-header">
+        @if(@ToastMessage.Title == "Success") {
+          <img src="Images/check.svg" class="rounded me-2" alt="...">
+        }
+        @if(@ToastMessage.Title == "Error") {
+          <img src="Images/cross.svg" class="rounded me-2" alt="...">
+        }
+
+        @* <img src="..." class="rounded me-2" alt="..."> *@
+
+        <strong class="me-auto">@ToastMessage.Title</strong>
+        
+        <small>@ToastMessage.Timestamp.ToString("g")</small>
+        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+      </div>
+      <div class="toast-body">
+        @ToastMessage.Message
+      </div>
+    </div>
+  </div>
+}
+
+@code {
+
+  ElementReference toastRef;
+  [Parameter]
+  public ToastMessage ToastMessage {get; set;} = new ToastMessage("titre", "message", DateTime.Now);
+
+  public async void ShowToast()
+  {
+    await JsRuntime.InvokeVoidAsync("ShowToast", toastRef);
+  }
+  
+}

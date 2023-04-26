@@ -1,0 +1,166 @@
+@inject IJSRuntime JsRuntime;
+@using BlazorApp.Shared.Models
+@inject HttpClient Http
+
+
+@if( modalType == "salarier")
+{
+<!-- Modal -->
+<div @ref="modalRef" class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" >
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Ajouter un Salarier</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+        <form @onsubmit="SubmitForm">
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="first_name">Prénom</label>
+            <input @bind="@newFirstName" type="text" class="form-control" id="first_name" name="first_name" placeholder="Prénom">
+          </div>
+          <div class="form-group">
+            <label for="last_name">Nom</label>
+            <input @bind="@newLastName"type="text" class="form-control" id="last_name" name="last_name" placeholder="Nom">
+          </div>
+          <div class="form-group">
+            <label for="phone">Téléphone Fixe</label>
+            <input @bind="@newFixPhoneNumber" type="tel" class="form-control" id="phone" name="phone" placeholder="Téléphone">
+          </div>
+          <div class="form-group">
+            <label for="portablePhone">Téléphone portable</label>
+            <input @bind="@newPhoneNumber" type="tel" class="form-control" id="portablePhone" name="portablePhone" placeholder="Téléphone portable">
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input @bind="@newEmail" type="email" class="form-control" id="email" name="email" placeholder="Email">
+          </div>
+          <div class="form-group">
+            <label for="site">Site</label>
+            <select @bind="@siteId" class="form-control" id="site" name="site">
+              <option value="0">Choisis un site</option>
+             
+              @if(sites != null) {
+
+              @foreach (var site in sites) {
+
+              <option value="@($"{site.Id}")">@site.Name</option>
+              }
+              }
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="service">Service</label>
+            <select @bind="@serviceId" class="form-control" id="service" name="service">
+              <option value="0">Choisis un service</option>
+              @if(services != null) {
+              @foreach (var service in services) {
+
+              <option value="@($"{service.Id}")">@service.Name</option>
+              }
+              }
+            </select>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close">Annuler</button>
+          <button type="submit" class="btn btn-primary" data-bs-dismiss="modal" aria-label="Close">Enregistrer</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+}
+<ToastComponent @ref="toast" ToastMessage="Message"/>
+
+@code {
+
+  ElementReference modalRef;
+  
+  [Parameter]
+  public string? modalType {get; set;}
+
+  [Parameter]
+  public EventCallback OnSalarierCreated { get; set; }
+
+  private string newFirstName = " ";
+  private string newLastName = " ";
+  private string newFixPhoneNumber = " ";
+  private string newPhoneNumber = " ";
+  private string newEmail = " ";
+  private int serviceId;
+  private int siteId;
+  private Service[]? services;
+  private Site[]? sites;
+
+  private ToastComponent? toast;
+  private ToastMessage Message = new ToastMessage("", "", DateTime.Now);
+
+
+
+
+  protected override async Task OnInitializedAsync()
+  {
+    var result = await Http.GetAsync("api/Site");
+        if (result.IsSuccessStatusCode)
+        {
+            var sitesResult = await result.Content.ReadFromJsonAsync<Site[]>();
+            sites = sitesResult;
+        }
+
+        var resultService = await Http.GetAsync("api/Service");
+        if (resultService.IsSuccessStatusCode)
+        {
+            var serviceResult = await resultService.Content.ReadFromJsonAsync<Service[]>();
+            services = serviceResult;
+        }
+  }
+  public async void ShowModal()
+  {
+    await JsRuntime.InvokeVoidAsync("ShowModal", modalRef);
+  }
+
+    private async Task SubmitForm()
+    {
+      
+        SalarierDToRegister request = new SalarierDToRegister() {
+            @* Name = newElementName *@
+            first_name = newFirstName,
+            last_name = newLastName,
+            portablePhone = newPhoneNumber,
+            fixPhone = newFixPhoneNumber,
+            email = newEmail,
+            serviceId = serviceId,
+            siteId = siteId
+        };
+
+        var response = await Http.PostAsJsonAsync("api/Salarier", request);
+
+        if (response.IsSuccessStatusCode)
+        {
+            var result = await response.Content.ReadFromJsonAsync<Salarier>();
+            if(result != null) {
+              ShowSuccessToast($"{result.email} a été créé avec succès");
+            }
+            await OnSalarierCreated.InvokeAsync();
+        }
+        else
+        {
+          var responseMsg = await response.Content.ReadAsStringAsync();
+          ShowErrorToast(responseMsg);
+        }
+
+    }
+
+            private void ShowErrorToast(string message)
+    {
+        Message = new ToastMessage("Error", message, DateTime.Now);
+        toast?.ShowToast();
+    }
+        private void ShowSuccessToast(string message)
+    {
+        Message = new ToastMessage("Success", message, DateTime.Now);
+        toast?.ShowToast();
+    }
+
+}

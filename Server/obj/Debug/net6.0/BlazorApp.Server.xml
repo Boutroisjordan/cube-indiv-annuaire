@@ -1,0 +1,71 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>BlazorApp.Server</name>
+    </assembly>
+    <members>
+        <member name="M:BlazorApp.Server.Controllers.SalarierController.GetAll">
+            <summary>
+            Récupère tous les sites
+            </summary>
+        </member>
+        <member name="M:BlazorApp.Server.Controllers.ServiceController.GetAll">
+            <summary>
+            Récupère tous les sites
+            </summary>
+        </member>
+        <member name="M:BlazorApp.Server.Controllers.SiteController.GetAll">
+            <summary>
+            Récupère tous les sites
+            </summary>
+        </member>
+        <member name="T:BlazorApp.Server.Migrations.Init">
+            <inheritdoc />
+        </member>
+        <member name="M:BlazorApp.Server.Migrations.Init.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:BlazorApp.Server.Migrations.Init.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:BlazorApp.Server.Migrations.Init.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:BlazorApp.Server.Migrations.userAuth">
+            <inheritdoc />
+        </member>
+        <member name="M:BlazorApp.Server.Migrations.userAuth.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:BlazorApp.Server.Migrations.userAuth.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:BlazorApp.Server.Migrations.userAuth.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:BlazorApp.Server.Migrations.another">
+            <inheritdoc />
+        </member>
+        <member name="M:BlazorApp.Server.Migrations.another.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:BlazorApp.Server.Migrations.another.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:BlazorApp.Server.Migrations.another.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:BlazorApp.Server.Migrations.another2">
+            <inheritdoc />
+        </member>
+        <member name="M:BlazorApp.Server.Migrations.another2.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:BlazorApp.Server.Migrations.another2.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:BlazorApp.Server.Migrations.another2.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+    </members>
+</doc>

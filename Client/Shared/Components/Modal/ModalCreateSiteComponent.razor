@@ -1,0 +1,89 @@
+@inject IJSRuntime JsRuntime;
+@using BlazorApp.Shared.Models
+@inject HttpClient Http
+
+
+
+
+<!-- Modal -->
+<div @ref="modalRef" class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" >
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Ajouter un Site</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+        <form @onsubmit="SubmitForm">
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="first_name">Nom du site</label>
+            <input @bind="@newElementName" type="text" class="form-control" id="first_name" name="first_name" placeholder="Prénom">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close">Annuler</button>
+          <button type="submit" class="btn btn-primary" data-bs-dismiss="modal" aria-label="Close">Enregistrer</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+<ToastComponent @ref="toast" ToastMessage="Message"/>
+
+
+@code {
+[Parameter]
+public EventCallback OnSiteCreated { get; set; }
+
+  ElementReference modalRef;
+  private string newElementName = " ";
+
+  private ToastComponent? toast;
+  private ToastMessage Message = new ToastMessage("", "", DateTime.Now);
+
+
+
+  public async void ShowModal()
+  {
+    await JsRuntime.InvokeVoidAsync("ShowModal", modalRef);
+  }
+
+private async Task SubmitForm()
+    {
+        SiteDToRegister request = new SiteDToRegister() {
+            Name = newElementName
+        };
+
+        var response = await Http.PostAsJsonAsync("api/Site", request);
+
+        if (response.IsSuccessStatusCode)
+        {
+            var result = await response.Content.ReadFromJsonAsync<Site>();
+            if(result != null) {
+              ShowSuccessToast($"{result.Name} a été créé avec succès");
+            }
+            await OnSiteCreated.InvokeAsync();
+        }
+        else
+        {
+          var responseMsg = await response.Content.ReadAsStringAsync();
+          ShowErrorToast(responseMsg);
+        }
+
+
+    }
+
+        private void ShowErrorToast(string message)
+    {
+        Message = new ToastMessage("Error", message, DateTime.Now);
+        toast?.ShowToast();
+    }
+        private void ShowSuccessToast(string message)
+    {
+        Message = new ToastMessage("Success", message, DateTime.Now);
+        toast?.ShowToast();
+    }
+
+}

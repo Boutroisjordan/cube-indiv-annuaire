@@ -1,0 +1,145 @@
+﻿@page "/sites"
+@using BlazorApp.Shared.Models
+@inject HttpClient Http
+@attribute [Authorize]
+
+
+<PageTitle>Sites</PageTitle>
+
+<h1>Les sites</h1>
+
+
+@if(Loader) {
+  <p><em>Loading... </em></p>
+} else {
+@if (sites is null)
+{
+<p>No content</p>
+     <button @onclick="ShowModal" type="button" class="btn btn-primary">
+        <span class="iconify" data-icon="bx:bx-plus"></span> Ajouter
+    </button>
+} else {
+    <lottie-player src="https://assets10.lottiefiles.com/packages/lf20_k8WCTV.json"  background="transparent"  speed="2"  style="width: 300px; height: 300px;"  loop autoplay></lottie-player>
+
+     <button @onclick="ShowModal" type="button" class="btn btn-primary">
+  <span class="iconify" data-icon="bx:bx-plus"></span> Ajouter
+</button>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var site in sites)
+            {
+                <tr>
+                    <td>@site.Id</td>
+                    <td>@site.Name</td>
+                    <td>
+                         <button @onclick="async () => await Delete(site)" type="button" class="btn btn-danger">Delete</button>
+                         <button @onclick="() =>OpenUpdateModal(site)" type="button" class="btn btn-secondary">Update</button> 
+
+                        @* <button type="button" class="btn btn-danger">Delete</button> *@
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+
+}
+}
+
+<ModalCreateSiteComponent @ref="modal" OnSiteCreated="RefreshSites" />
+<ModalUpdateSiteComponent @ref="modalUpdate" siteModel="@currentUpdateSite" OnSiteCreated="RefreshSites" />
+
+<ToastComponent @ref="toast" ToastMessage="Message"/>
+
+
+@code {
+
+    private bool Loader = true;
+    private ModalCreateSiteComponent? modal;
+    private ModalUpdateSiteComponent? modalUpdate;
+
+    private Site[]? sites;
+    private Site? currentUpdateSite;
+    private string? errorMessage;
+    private string? successMessage;
+
+    private string? yourHeart {get; set;}
+
+    private ToastMessage Message = new ToastMessage("test", "test", DateTime.Now);
+    private ToastComponent? toast;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try {
+        var result = await Http.GetAsync("api/Site");
+
+        if (result.IsSuccessStatusCode)
+        {
+            var sitesResult = await result.Content.ReadFromJsonAsync<Site[]>();
+            sites = sitesResult;
+            Loader = false;
+        } else if(result.StatusCode.ToString() == "NoContent") {
+            yourHeart = "No content";
+            Loader = false;
+
+        }
+        } catch {
+            Loader = false;
+        }
+
+    }
+
+    private async Task Delete(Site site)
+    {
+        var response = await Http.DeleteAsync($"api/Site/{site.Id}");
+
+        if (response.IsSuccessStatusCode)
+        {
+
+            var result = await response.Content.ReadFromJsonAsync<Site>();
+            if(result != null) {
+                Message = new ToastMessage("Success", $"{site.Name} a été supprimer avec succès", DateTime.Now);
+
+                // Mettre à jour localement la liste des sites après la suppression
+                sites = sites?.Where(s => s.Id != site.Id).ToArray();
+                toast?.ShowToast();
+                Console.WriteLine("ohhhhhhhhh");
+
+            }
+        }
+        else
+        {
+            errorMessage = await response.Content.ReadAsStringAsync();
+            Message = new ToastMessage("Error", $"{errorMessage}", DateTime.Now);
+            toast?.ShowToast();
+        }
+    }
+    private void OpenUpdateModal(Site site)
+    {
+        currentUpdateSite = site;
+        modalUpdate?.ShowModal();
+
+    }
+    private void ShowModal()
+    {
+        modal?.ShowModal();
+    }
+
+    private async Task RefreshSites()
+    {
+        var result = await Http.GetAsync("api/Site");
+
+        if (result.IsSuccessStatusCode)
+        {
+            var sitesResult = await result.Content.ReadFromJsonAsync<Site[]>();
+            sites = sitesResult;
+        }
+    }
+}

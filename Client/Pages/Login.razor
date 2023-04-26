@@ -1,0 +1,36 @@
+﻿@page "/login2"
+@using BlazorApp.Shared.Models
+@using Blazored.LocalStorage
+@inject HttpClient Http
+@inject AuthenticationStateProvider AuthStateProvider
+@inject ILocalStorageService LocalStorage
+@inject NavigationManager NavigationManager
+
+
+<PageTitle>login</PageTitle>
+
+
+    <div class="container">
+        <h2>Login</h2>
+<EditForm Model="user" OnSubmit="HandleLogin">
+    <label for="username">Name</label>
+    <InputText id="username" @bind-Value="user.Username" />
+    <label for="password">Password</label>
+    <InputText id="password" @bind-Value="user.Password" type="password" />
+    <button type="submit" class="btn btn-primary">Do it!</button>
+</EditForm>
+    </div>
+
+    @code {
+    UserDToLogin user = new UserDToLogin();
+
+    async Task HandleLogin()
+    {
+        var result = await Http.PostAsJsonAsync("api/Auth/login", user);
+        var token = await result.Content.ReadAsStringAsync();
+        await LocalStorage.SetItemAsync("token", token);
+        await AuthStateProvider.GetAuthenticationStateAsync();
+        NavigationManager.NavigateTo("/");
+
+    }
+}

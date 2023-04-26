@@ -1,0 +1,41 @@
+﻿@page "/login"
+@using BlazorApp.Shared.Models
+@using BlazorApp.Client.Authentication
+@inject HttpClient Http
+@inject IJSRuntime Json
+@inject AuthenticationStateProvider authstateProvider
+@inject NavigationManager navManager
+
+<h3>Login</h3>
+
+
+    <div class="container">
+        <h2>Login</h2>
+<EditForm Model="user" OnSubmit="HandleLogin">
+    <label for="username">Name</label>
+    <InputText id="username" @bind-Value="user.Username" />
+    <label for="password">Password</label>
+    <InputText id="password" @bind-Value="user.Password" type="password" />
+    <button type="submit" class="btn btn-primary">Do it!</button>
+</EditForm>
+    </div>
+
+@code {
+UserDToLogin user = new UserDToLogin();
+
+    async Task HandleLogin()
+    {
+        var result = await Http.PostAsJsonAsync("api/Auth/login", user);
+        if(result.IsSuccessStatusCode) {
+            var userSession = await result.Content.ReadFromJsonAsync<UserSession>();
+                var customAuthStateProvider = (CustomAuthenticationStateProvider)authstateProvider;
+                await customAuthStateProvider.UpdateAuthenticationState(userSession);
+                navManager.NavigateTo("/", true);
+        }
+        else if (result.StatusCode == System.Net.HttpStatusCode.Unauthorized) {
+            await Json.InvokeVoidAsync("alert", "Invalid User name or password");
+            return;
+        }
+
+    }
+}

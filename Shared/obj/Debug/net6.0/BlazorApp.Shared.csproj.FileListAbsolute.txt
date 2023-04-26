@@ -1,0 +1,12 @@
+/Users/jordanboutrois/Documents/DEV/cube-indiv/BlazorApp/Shared/bin/Debug/net6.0/BlazorApp.Shared.deps.json
+/Users/jordanboutrois/Documents/DEV/cube-indiv/BlazorApp/Shared/bin/Debug/net6.0/BlazorApp.Shared.dll
+/Users/jordanboutrois/Documents/DEV/cube-indiv/BlazorApp/Shared/bin/Debug/net6.0/BlazorApp.Shared.pdb
+/Users/jordanboutrois/Documents/DEV/cube-indiv/BlazorApp/Shared/obj/Debug/net6.0/BlazorApp.Shared.csproj.AssemblyReference.cache
+/Users/jordanboutrois/Documents/DEV/cube-indiv/BlazorApp/Shared/obj/Debug/net6.0/BlazorApp.Shared.GeneratedMSBuildEditorConfig.editorconfig
+/Users/jordanboutrois/Documents/DEV/cube-indiv/BlazorApp/Shared/obj/Debug/net6.0/BlazorApp.Shared.AssemblyInfoInputs.cache
+/Users/jordanboutrois/Documents/DEV/cube-indiv/BlazorApp/Shared/obj/Debug/net6.0/BlazorApp.Shared.AssemblyInfo.cs
+/Users/jordanboutrois/Documents/DEV/cube-indiv/BlazorApp/Shared/obj/Debug/net6.0/BlazorApp.Shared.csproj.CoreCompileInputs.cache
+/Users/jordanboutrois/Documents/DEV/cube-indiv/BlazorApp/Shared/obj/Debug/net6.0/BlazorApp.Shared.dll
+/Users/jordanboutrois/Documents/DEV/cube-indiv/BlazorApp/Shared/obj/Debug/net6.0/refint/BlazorApp.Shared.dll
+/Users/jordanboutrois/Documents/DEV/cube-indiv/BlazorApp/Shared/obj/Debug/net6.0/BlazorApp.Shared.pdb
+/Users/jordanboutrois/Documents/DEV/cube-indiv/BlazorApp/Shared/obj/Debug/net6.0/ref/BlazorApp.Shared.dll

@@ -1,0 +1,140 @@
+﻿@page "/services"
+@using BlazorApp.Shared.Models
+@inject HttpClient Http
+@attribute [Authorize]
+
+<PageTitle>Services</PageTitle>
+
+<h1>Les services</h1>
+
+
+
+@if(Loader) {
+  <p><em>Loading... </em></p>
+} else {
+    
+
+     <button @onclick="ShowModal" type="button" class="btn btn-primary">
+  <span class="iconify" data-icon="bx:bx-plus"></span> Ajouter
+</button>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+
+        @if (services != null)
+        {
+        <tbody>
+            @foreach (var service in services)
+            {
+                <tr>
+                    <td>@service.Id</td>
+                    <td>@service.Name</td>
+                    <td>
+                         <button @onclick="async () => await Delete(service)" type="button" class="btn btn-danger">Delete</button> 
+                         <button @onclick="() =>OpenUpdateModal(service)" type="button" class="btn btn-secondary">Update</button> 
+                        
+                        @* <button type="button" class="btn btn-danger">Delete</button> *@
+                    </td>
+                </tr>
+            }
+        </tbody>
+}
+    </table>
+
+
+
+
+}
+<ModalCreateServiceComponent @ref="modal" OnServiceCreated="RefreshServices" />
+<ModalUpdateServiceComponent @ref="modal2" serviceModel="currentUpdateService"  OnServiceCreated="RefreshServices" />
+<ToastComponent @ref="toast" ToastMessage="Message"/>
+
+
+@code {
+
+    private bool Loader = true;
+    private ModalCreateServiceComponent? modal;
+    private ModalUpdateServiceComponent? modal2;
+
+    private Service[]? services;
+    private Service? currentUpdateService;
+
+    private string? errorMessage;
+    private string? successMessage;
+
+    private string? FetchErrorMessage {get; set;}
+
+    private ToastMessage Message = new ToastMessage("test", "test", DateTime.Now);
+    private ToastComponent? toast;
+
+    protected override async Task OnInitializedAsync()
+    {
+         var result = await Http.GetAsync("api/Service");
+
+        if (result.IsSuccessStatusCode)
+        {
+            if(result.StatusCode.ToString() == "NoContent") {
+
+            FetchErrorMessage = "No content";
+            Loader = false;
+            }else {
+
+            var serviceResult = await result.Content.ReadFromJsonAsync<Service[]>();
+            services = serviceResult;
+            Loader = false;
+            }
+        }
+    }
+
+    private async Task Delete(Service service)
+    {
+        var response = await Http.DeleteAsync($"api/Service/{service.Id}");
+
+        if (response.IsSuccessStatusCode)
+        {
+
+            var result = await response.Content.ReadFromJsonAsync<Service>();
+            if(result != null) {
+                Message = new ToastMessage("Success", $"{service.Name} a été supprimer avec succès", DateTime.Now);
+
+                // Mettre à jour localement la liste des sites après la suppression
+                services = services?.Where(s => s.Id != service.Id).ToArray();
+                toast?.ShowToast();
+
+            }
+        }
+        else
+        {
+            errorMessage = await response.Content.ReadAsStringAsync();
+            Message = new ToastMessage("Error", $"{errorMessage}", DateTime.Now);
+            toast?.ShowToast();
+        }
+    }
+        private void OpenUpdateModal(Service service)
+    {
+        currentUpdateService = service;
+        modal2?.ShowModal();
+
+    }
+    private void ShowModal()
+    {
+        modal?.ShowModal();
+    }
+
+    private async Task RefreshServices()
+    {
+        var result = await Http.GetAsync("api/Service");
+
+        if (result.IsSuccessStatusCode)
+        {
+            var servicesResult = await result.Content.ReadFromJsonAsync<Service[]>();
+            services = servicesResult;
+        }
+    }
+}
+
