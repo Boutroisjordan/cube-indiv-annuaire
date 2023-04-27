@@ -74,9 +74,9 @@ public class SalarierController : ControllerBase
     public async Task<IActionResult> Add(SalarierDToRegister request)
   {
 
+    var checkAvailability = await _salarierService.CheckEmailAvailability(request);
         var result = await _salarierService.Create(request);
 
-    var checkAvailability = await _salarierService.CheckEmailAvailability(request);
 
     if (!checkAvailability)
     {
