@@ -16,6 +16,7 @@ public interface ISalarierService {
     Task<Salarier> Update(int id, SalarierDToRegister request);
     
     Task<Boolean> CheckEmailAvailabilityUpdateDTO(int id, SalarierDToRegister request);
+  Task<Boolean> CheckEmailAvailability(SalarierDToRegister request);
 
 
 

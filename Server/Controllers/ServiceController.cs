@@ -56,21 +56,21 @@ public class ServiceController : ControllerBase
         return Ok(result);
     }
 
-    // /// <summary>
-    // /// Récupère un site par son nom
-    // /// </summary>
-    // [HttpGet]
-    // [Route("name/{label}")]
-    // public async Task<IActionResult> GetByLabel(string label)
-    // {
-    //     return Ok();
-    // }
+  // /// <summary>
+  // /// Récupère un site par son nom
+  // /// </summary>
+  // [HttpGet]
+  // [Route("name/{label}")]
+  // public async Task<IActionResult> GetByLabel(string label)
+  // {
+  //     return Ok();
+  // }
 
-    // /// <summary>
-    // /// Créer un type d'alcool
-    // /// </summary>
-    // // [Authorize(Roles = "Admin")]
-    [HttpPost]
+  // /// <summary>
+  // /// Créer un type d'alcool
+  // /// </summary>
+  // // [Authorize(Roles = "Admin")]
+  [HttpPost, Authorize]
     public async Task<IActionResult> Add(ServiceDToRegister request)
     {
         // var checkAvailability = await _salarierService.CheckNameAvailability(request);
@@ -83,11 +83,11 @@ public class ServiceController : ControllerBase
         return Ok(result);
     }
 
-    // /// <summary>
-    // /// Met à jour un type d'alcool
-    // /// </summary>
-    // // [Authorize(Roles = "Admin")]
-   [HttpPut]
+  // /// <summary>
+  // /// Met à jour un type d'alcool
+  // /// </summary>
+  // // [Authorize(Roles = "Admin")]
+  [HttpPut, Authorize]
     [Route("{id}")]
     public async Task<IActionResult> Update(int id, ServiceDToRegister request)
     {
@@ -106,12 +106,11 @@ public class ServiceController : ControllerBase
     // /// </summary>
     // // [Authorize(Roles = "Admin")]
     [HttpDelete]
-    [Route("{id}")]
+  [Route("{id}"), Authorize]
     public async Task<IActionResult> Delete(int id)
     {
-      
-        var result = await _serviceService.Delete(id);
-        // Console.WriteLine($"DELETE: {result.Name}");
+
+    var result = await _serviceService.Delete(id);
         // return Ok({message: "", infos: result});
         return Ok(result);
     }

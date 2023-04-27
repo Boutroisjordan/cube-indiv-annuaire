@@ -111,9 +111,8 @@ public class SiteController : ControllerBase
     [Route("{id}")]
     public async Task<IActionResult> Delete(int id)
     {
-      
-        var result = await _siteService.Delete(id);
-        Console.WriteLine($"DELETE: {result.Name}");
+
+    var result = await _siteService.Delete(id);
         // return Ok({message: "", infos: result});
         return Ok(result);
     }

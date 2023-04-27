@@ -34,19 +34,24 @@ public class UserService : IUserService
   public async Task<AuthenticateResponse?> Authenticate(UserDToLogin request)
   {
 
-      string passwordHashString = BCrypt.Net.BCrypt.HashPassword(request.Password);
-  Console.Write($"the input after  hashed: {passwordHashString}");
+    // string passwordHashString = BCrypt.Net.BCrypt.HashPassword(request.Password);
 
     // var user = await _context.Users.Where(x => x.Username == request.Username && x.PasswordHash == passwordHashString).FirstOrDefaultAsync();
     var user = await _context.Users.Where(x => x.Username == request.Username).FirstOrDefaultAsync();
     // return null if user not found
-    if (user == null) {
-  Console.Write($"Retourn NULLLLLLL");
+    if (user == null)
+    {
 
       return null;
-    }  //commenter mmais falalit peut etre pas
-  Console.Write($"find userName ? {user.Username}");
-  Console.Write($"find user Pass ? {user.PasswordHash}");
+    }
+
+    var passwordHashString = BCrypt.Net.BCrypt.Verify(request.Password, user.PasswordHash);
+
+    if (!passwordHashString)
+    {
+      Console.Write($"User name: {user.Username}  PasswordHashRecieved: {passwordHashString.ToString()} , celui en bdd: {user.PasswordHash.ToString()}");
+      return null;
+    }
     var token = generateJwtToken(user);
 
     return new AuthenticateResponse(user, token);

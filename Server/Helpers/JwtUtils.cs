@@ -33,80 +33,78 @@ public class JwtUtils : IJwtUtils
 
     }
 
-    // public RefreshToken GenerateAccessToken(User user)
-    // {
-    //     var tokenHandler = new JwtSecurityTokenHandler();
-    //     var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
+  // public RefreshToken GenerateAccessToken(User user)
+  // {
+  //     var tokenHandler = new JwtSecurityTokenHandler();
+  //     var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
 
-    //     // Crée un token d'accès valide pendant une heure
+  //     // Crée un token d'accès valide pendant une heure
 
-    //     var Role = _context.Roles.Include(r => r.Id).SingleOrDefault(r => r.Id == user.UserId).Name;
-    //     Console.WriteLine("Role de l'utilisateur " + Role);
+  //     var Role = _context.Roles.Include(r => r.Id).SingleOrDefault(r => r.Id == user.UserId).Name;
 
-    //     var tokenDescriptor = new SecurityTokenDescriptor
-    //     {
-    //         Subject = new ClaimsIdentity(new[] { new Claim("id", user.UserId.ToString()), new Claim(ClaimTypes.Role, Role) }),
-    //         Expires = DateTime.UtcNow.AddHours(8),
-    //         SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
-    //     };
-    //     var accessToken = tokenHandler.CreateToken(tokenDescriptor);
+  //     var tokenDescriptor = new SecurityTokenDescriptor
+  //     {
+  //         Subject = new ClaimsIdentity(new[] { new Claim("id", user.UserId.ToString()), new Claim(ClaimTypes.Role, Role) }),
+  //         Expires = DateTime.UtcNow.AddHours(8),
+  //         SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+  //     };
+  //     var accessToken = tokenHandler.CreateToken(tokenDescriptor);
 
-    //     var refreshToken = _context.RefreshToken.SingleOrDefault(r => r.UserId == user.UserId);
+  //     var refreshToken = _context.RefreshToken.SingleOrDefault(r => r.UserId == user.UserId);
 
-    //     if (refreshToken != null && refreshToken.NewToken != null && refreshToken.NewTokenExpires > DateTime.UtcNow)
-    //     {
-    //         if (refreshToken.AccessTokenExpires < DateTime.UtcNow)
-    //         {
-    //             // Mettre à jour le token d'accès expiré avec un nouveau token d'accès valide
-    //             accessToken = tokenHandler.CreateToken(tokenDescriptor);
-    //             refreshToken.AccessToken = tokenHandler.WriteToken(accessToken);
-    //             refreshToken.AccessTokenExpires = tokenDescriptor.Expires ?? throw new Exception("Could not create access token");
-    //             _context.SaveChanges();
-    //         }
-    //         Console.WriteLine("refreshToken.AccessToken: " + refreshToken.AccessToken);
-    //         refreshToken.AccessTokenExpires = tokenDescriptor.Expires ?? throw new Exception("Could not create access token");
-    //         return refreshToken;
-    //     }
+  //     if (refreshToken != null && refreshToken.NewToken != null && refreshToken.NewTokenExpires > DateTime.UtcNow)
+  //     {
+  //         if (refreshToken.AccessTokenExpires < DateTime.UtcNow)
+  //         {
+  //             // Mettre à jour le token d'accès expiré avec un nouveau token d'accès valide
+  //             accessToken = tokenHandler.CreateToken(tokenDescriptor);
+  //             refreshToken.AccessToken = tokenHandler.WriteToken(accessToken);
+  //             refreshToken.AccessTokenExpires = tokenDescriptor.Expires ?? throw new Exception("Could not create access token");
+  //             _context.SaveChanges();
+  //         }
+  //         refreshToken.AccessTokenExpires = tokenDescriptor.Expires ?? throw new Exception("Could not create access token");
+  //         return refreshToken;
+  //     }
 
 
-    //     // Crée un token de rafraîchissement valide pendant 7 jours
+  //     // Crée un token de rafraîchissement valide pendant 7 jours
 
-    //     var refreshTokenDescriptor = new SecurityTokenDescriptor
-    //     {
-    //         Subject = new ClaimsIdentity(new[] { new Claim("id", user.UserId.ToString()), new Claim(ClaimTypes.Role, Role) }),
-    //         Expires = DateTime.UtcNow.AddDays(7),
-    //         SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
-    //     };
-    //     var newRefreshToken = tokenHandler.CreateToken(refreshTokenDescriptor);
+  //     var refreshTokenDescriptor = new SecurityTokenDescriptor
+  //     {
+  //         Subject = new ClaimsIdentity(new[] { new Claim("id", user.UserId.ToString()), new Claim(ClaimTypes.Role, Role) }),
+  //         Expires = DateTime.UtcNow.AddDays(7),
+  //         SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+  //     };
+  //     var newRefreshToken = tokenHandler.CreateToken(refreshTokenDescriptor);
 
-    //     // Stocke le refresh token dans la base de données pour une persistance de connexion
-    //     var refreshTokenBdd = new RefreshToken
-    //     {
-    //         AccessToken = tokenHandler.WriteToken(accessToken),
-    //         AccessTokenExpires = tokenDescriptor.Expires ?? throw new Exception("Could not create access token"),
-    //         NewToken = tokenHandler.WriteToken(newRefreshToken),
-    //         NewTokenExpires = refreshTokenDescriptor.Expires ?? throw new Exception("Could not create refresh token"),
-    //         Created = DateTime.UtcNow,
-    //         UserId = user.UserId,
-    //     };
-    //     _context.RefreshToken.Add(refreshTokenBdd);
+  //     // Stocke le refresh token dans la base de données pour une persistance de connexion
+  //     var refreshTokenBdd = new RefreshToken
+  //     {
+  //         AccessToken = tokenHandler.WriteToken(accessToken),
+  //         AccessTokenExpires = tokenDescriptor.Expires ?? throw new Exception("Could not create access token"),
+  //         NewToken = tokenHandler.WriteToken(newRefreshToken),
+  //         NewTokenExpires = refreshTokenDescriptor.Expires ?? throw new Exception("Could not create refresh token"),
+  //         Created = DateTime.UtcNow,
+  //         UserId = user.UserId,
+  //     };
+  //     _context.RefreshToken.Add(refreshTokenBdd);
 
-    //     _context.SaveChanges();
+  //     _context.SaveChanges();
 
-    //     // Retourne les informations de token pour une utilisation immédiate
-    //     return new RefreshToken
-    //     {
-    //         AccessToken = tokenHandler.WriteToken(accessToken),
-    //         AccessTokenExpires = tokenDescriptor.Expires ?? throw new Exception("Could not create access token"),
-    //         NewToken = refreshTokenBdd.NewToken,
-    //         NewTokenExpires = refreshTokenBdd.NewTokenExpires,
-    //         Created = DateTime.UtcNow,
-    //     };
-    // }
+  //     // Retourne les informations de token pour une utilisation immédiate
+  //     return new RefreshToken
+  //     {
+  //         AccessToken = tokenHandler.WriteToken(accessToken),
+  //         AccessTokenExpires = tokenDescriptor.Expires ?? throw new Exception("Could not create access token"),
+  //         NewToken = refreshTokenBdd.NewToken,
+  //         NewTokenExpires = refreshTokenBdd.NewTokenExpires,
+  //         Created = DateTime.UtcNow,
+  //     };
+  // }
 
 
 
-    public int ValidateToken(string token)
+  public int ValidateToken(string token)
     {
         var tokenHandler = new JwtSecurityTokenHandler();
         if (_appSettings.Secret is null)
@@ -126,7 +124,6 @@ public class JwtUtils : IJwtUtils
                 // set clockskew to zero so tokens expire exactly at token expiration time (instead of 5 minutes later)
                 ClockSkew = TimeSpan.Zero
             }, out SecurityToken validatedToken);
-           Console.Write("[OOOOOOOO] après le validatetoken func default");
              
             var jwtToken = (JwtSecurityToken)validatedToken;
             var userId = int.Parse(jwtToken.Claims.First(x => x.Type == "id").Value);
@@ -146,80 +143,77 @@ public class JwtUtils : IJwtUtils
         }
     }
 
-    // public RefreshToken GenerateRefreshToken(User user)
-    // {
-    //     var tokenHandler = new JwtSecurityTokenHandler();
-    //     var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
+  // public RefreshToken GenerateRefreshToken(User user)
+  // {
+  //     var tokenHandler = new JwtSecurityTokenHandler();
+  //     var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
 
-    //     // Create claims for refresh token
-    //     var claims = new List<Claim>
-    // {
-    //     new Claim("id", user.UserId.ToString()),
-    //     new Claim(ClaimTypes.Role, _context.Roles.Include(r => r.Id).SingleOrDefault(r => r.Id == user.UserId).Name)
-    // };
-    //     var refreshToken = _context.RefreshToken.SingleOrDefault(r => r.UserId == user.UserId);
+  //     // Create claims for refresh token
+  //     var claims = new List<Claim>
+  // {
+  //     new Claim("id", user.UserId.ToString()),
+  //     new Claim(ClaimTypes.Role, _context.Roles.Include(r => r.Id).SingleOrDefault(r => r.Id == user.UserId).Name)
+  // };
+  //     var refreshToken = _context.RefreshToken.SingleOrDefault(r => r.UserId == user.UserId);
 
-    //     // Generate refresh access token
-    //     var refreshAccessToken = new SecurityTokenDescriptor
-    //     {
-    //         Subject = new ClaimsIdentity(claims),
-    //         Expires = DateTime.UtcNow.AddHours(8),
-    //         SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
-    //     };
-    //     var newRefreshTokenAccess = tokenHandler.CreateToken(refreshAccessToken);
+  //     // Generate refresh access token
+  //     var refreshAccessToken = new SecurityTokenDescriptor
+  //     {
+  //         Subject = new ClaimsIdentity(claims),
+  //         Expires = DateTime.UtcNow.AddHours(8),
+  //         SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+  //     };
+  //     var newRefreshTokenAccess = tokenHandler.CreateToken(refreshAccessToken);
 
-    //     var refreshTokenBdd = new RefreshToken
-    //     {
-    //         AccessToken = tokenHandler.WriteToken(newRefreshTokenAccess),
-    //         AccessTokenExpires = refreshAccessToken.Expires ?? throw new Exception("Could not create refresh token"),
-    //         Created = DateTime.UtcNow,
-    //         NewToken = refreshToken.NewToken,
-    //         NewTokenExpires = refreshToken.NewTokenExpires,
-    //         UserId = user.UserId
-    //     };
-    //     _context.RefreshToken.Update(refreshTokenBdd);
-    //     return refreshTokenBdd;
-    // }
+  //     var refreshTokenBdd = new RefreshToken
+  //     {
+  //         AccessToken = tokenHandler.WriteToken(newRefreshTokenAccess),
+  //         AccessTokenExpires = refreshAccessToken.Expires ?? throw new Exception("Could not create refresh token"),
+  //         Created = DateTime.UtcNow,
+  //         NewToken = refreshToken.NewToken,
+  //         NewTokenExpires = refreshToken.NewTokenExpires,
+  //         UserId = user.UserId
+  //     };
+  //     _context.RefreshToken.Update(refreshTokenBdd);
+  //     return refreshTokenBdd;
+  // }
 
 
 
-    // public ClaimsPrincipal GetPrincipalFromToken(string token, string signingKey)
-    // {
-    //     var tokenHandler = new JwtSecurityTokenHandler();
-    //     var key = Encoding.ASCII.GetBytes(signingKey);
-    //     Console.WriteLine(key);
-    //     Console.WriteLine(token);
-    //     try
-    //     {
-    //         Console.WriteLine("try");
-    //         var validationParameters = new TokenValidationParameters
-    //         {
-    //             ValidateIssuerSigningKey = true,
-    //             IssuerSigningKey = new SymmetricSecurityKey(key),
-    //             ValidateIssuer = false,
-    //             ValidateAudience = false,
-    //             RequireExpirationTime = true,
-    //             ClockSkew = TimeSpan.Zero
-    //         };
+  // public ClaimsPrincipal GetPrincipalFromToken(string token, string signingKey)
+  // {
+  //     var tokenHandler = new JwtSecurityTokenHandler();
+  //     var key = Encoding.ASCII.GetBytes(signingKey);
+  //     try
+  //     {
+  //         var validationParameters = new TokenValidationParameters
+  //         {
+  //             ValidateIssuerSigningKey = true,
+  //             IssuerSigningKey = new SymmetricSecurityKey(key),
+  //             ValidateIssuer = false,
+  //             ValidateAudience = false,
+  //             RequireExpirationTime = true,
+  //             ClockSkew = TimeSpan.Zero
+  //         };
 
-    //         var principal = tokenHandler.ValidateToken(token, validationParameters, out SecurityToken validatedToken);
-    //         if (!IsJwtWithValidSecurityAlgorithm(validatedToken))
-    //         {
-    //             return null;
-    //         }
+  //         var principal = tokenHandler.ValidateToken(token, validationParameters, out SecurityToken validatedToken);
+  //         if (!IsJwtWithValidSecurityAlgorithm(validatedToken))
+  //         {
+  //             return null;
+  //         }
 
-    //         return principal;
-    //     }
-    //     catch
-    //     {
-    //         return null;
-    //     }
-    // }
+  //         return principal;
+  //     }
+  //     catch
+  //     {
+  //         return null;
+  //     }
+  // }
 
-    // private bool IsJwtWithValidSecurityAlgorithm(SecurityToken validatedToken)
-    // {
-    //     return (validatedToken is JwtSecurityToken jwtSecurityToken) &&
-    //            jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256, StringComparison.InvariantCultureIgnoreCase);
-    // }
+  // private bool IsJwtWithValidSecurityAlgorithm(SecurityToken validatedToken)
+  // {
+  //     return (validatedToken is JwtSecurityToken jwtSecurityToken) &&
+  //            jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256, StringComparison.InvariantCultureIgnoreCase);
+  // }
 
 }

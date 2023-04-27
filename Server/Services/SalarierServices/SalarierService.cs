@@ -84,7 +84,7 @@ public class SalarierService : ISalarierService
 
   public async Task<Salarier> GetById(int id)
   {
-    var dbResult = await _context.Salariers.Include(x => x.service).Where(y => y.Id == id).FirstOrDefaultAsync();
+    var dbResult = await _context.Salariers.Include(x => x.service).Include(x => x.site).Where(y => y.Id == id).FirstOrDefaultAsync();
 
     if (dbResult is null)
     {
@@ -119,6 +119,18 @@ public class SalarierService : ISalarierService
   {
     // var checkDoublons = await _context.Services.AnyAsync();
     var checkDoublons = await _context.Salariers.Where(x => x.email == request.email && x.Id != id).AnyAsync();
+
+    if (checkDoublons)
+    {
+      return false;
+    }
+
+    return true;
+  }
+  public async Task<Boolean> CheckEmailAvailability(SalarierDToRegister request)
+  {
+    // var checkDoublons = await _context.Services.AnyAsync();
+    var checkDoublons = await _context.Salariers.Where(x => x.email == request.email).AnyAsync();
 
     if (checkDoublons)
     {

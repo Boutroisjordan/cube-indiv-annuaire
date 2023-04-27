@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "Emnpnul4ZuzNXyHX30rG90/u7XKf+Old9tXHjkfQ2n+qMgwmBWSXxHGWwWkDlae6ELqMdvTPugAjZMh0nstYzg==",
+  "dgSpecHash": "Fl0kypOLWVQPZJXzFC7tmpdgkRjq/lWfTBdvKFjGyBSEFp2MEW2LfVcgKbxc6b0YGJZPeoNeO+N8G8YtxkaQiw==",
   "success": true,
   "projectFilePath": "/Users/jordanboutrois/Documents/DEV/cube-indiv/BlazorApp/Server/BlazorApp.Server.csproj",
   "expectedPackageFiles": [
@@ -11,6 +11,7 @@
     "/Users/jordanboutrois/.nuget/packages/bcrypt.net-next/4.0.3/bcrypt.net-next.4.0.3.nupkg.sha512",
     "/Users/jordanboutrois/.nuget/packages/blazored.localstorage/4.3.0/blazored.localstorage.4.3.0.nupkg.sha512",
     "/Users/jordanboutrois/.nuget/packages/blazored.sessionstorage/2.3.0/blazored.sessionstorage.2.3.0.nupkg.sha512",
+    "/Users/jordanboutrois/.nuget/packages/bogus/34.0.2/bogus.34.0.2.nupkg.sha512",
     "/Users/jordanboutrois/.nuget/packages/humanizer.core/2.14.1/humanizer.core.2.14.1.nupkg.sha512",
     "/Users/jordanboutrois/.nuget/packages/microsoft.aspnetcore.authentication.jwtbearer/6.0.0/microsoft.aspnetcore.authentication.jwtbearer.6.0.0.nupkg.sha512",
     "/Users/jordanboutrois/.nuget/packages/microsoft.aspnetcore.authorization/6.0.12/microsoft.aspnetcore.authorization.6.0.12.nupkg.sha512",

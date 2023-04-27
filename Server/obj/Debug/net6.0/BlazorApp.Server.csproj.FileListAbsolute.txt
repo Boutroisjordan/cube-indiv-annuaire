@@ -121,3 +121,4 @@
 /Users/jordanboutrois/Documents/DEV/cube-indiv/BlazorApp/Server/bin/Debug/net6.0/Blazored.LocalStorage.dll
 /Users/jordanboutrois/Documents/DEV/cube-indiv/BlazorApp/Server/bin/Debug/net6.0/BCrypt.Net-Next.dll
 /Users/jordanboutrois/Documents/DEV/cube-indiv/BlazorApp/Server/bin/Debug/net6.0/Blazored.SessionStorage.dll
+/Users/jordanboutrois/Documents/DEV/cube-indiv/BlazorApp/Server/bin/Debug/net6.0/Bogus.dll

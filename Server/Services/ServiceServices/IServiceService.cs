@@ -15,9 +15,6 @@ public interface IServiceService {
 
     Task<Service> Delete(int id);
 
-    Task<Boolean> CheckNameAvailabilityUpdateDTO(int id, ServiceDToRegister request);
-
-
-    // Task<Boolean> CheckNameAvailability(SiteDToRegister request);
+  Task<Boolean> CheckNameAvailabilityUpdateDTO(int id, ServiceDToRegister request);
 }
   

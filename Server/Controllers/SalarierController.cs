@@ -72,15 +72,18 @@ public class SalarierController : ControllerBase
     // // [Authorize(Roles = "Admin")]
     [HttpPost]
     public async Task<IActionResult> Add(SalarierDToRegister request)
-    {
-        // var checkAvailability = await _salarierService.CheckNameAvailability(request);
+  {
 
-        // if(!checkAvailability) {
-        //     return BadRequest($"Site with name '{request.Name}' already exist.");
-        // }
         var result = await _salarierService.Create(request);
-        
-        return Ok(result);
+
+    var checkAvailability = await _salarierService.CheckEmailAvailability(request);
+
+    if (!checkAvailability)
+    {
+      return BadRequest($"salarier with name '{request.email}' already exist.");
+    }
+
+    return Ok(result);
     }
 
     // /// <summary>
@@ -109,9 +112,8 @@ public class SalarierController : ControllerBase
     [Route("{id}")]
     public async Task<IActionResult> Delete(int id)
     {
-      
-        var result = await _salarierService.Delete(id);
-        // Console.WriteLine($"DELETE: {result.Name}");
+
+    var result = await _salarierService.Delete(id);
         // return Ok({message: "", infos: result});
         return Ok(result);
     }

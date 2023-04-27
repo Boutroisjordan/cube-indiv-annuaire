@@ -42,7 +42,7 @@ public class AuthController : ControllerBase
         var result = await _userService.Authenticate(request);
 
         if(result is null) {
-            return BadRequest("Bad Crendentials when Auth");
+      return BadRequest("Bad Crendentials");
         }
         return Ok(result);
     }
@@ -121,9 +121,8 @@ public class AuthController : ControllerBase
     [Route("{id}")]
     public async Task<IActionResult> Delete(int id)
     {
-      
-        var result = await _userService.Delete(id);
-        // Console.WriteLine($"DELETE: {result.Name}");
+
+    var result = await _userService.Delete(id);
         // return Ok({message: "", infos: result});
 
         if(result is null) {
