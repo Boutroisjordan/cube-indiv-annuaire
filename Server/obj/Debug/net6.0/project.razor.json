@@ -7597,43 +7597,6 @@
         }
       },
       {
-        "HashCode": -1018824871,
-        "Kind": "Components.Component",
-        "Name": "BlazorApp.Client.Pages.Login",
-        "AssemblyName": "BlazorApp.Client",
-        "CaseSensitive": true,
-        "TagMatchingRules": [
-          {
-            "TagName": "Login"
-          }
-        ],
-        "Metadata": {
-          "Runtime.Name": "Components.IComponent",
-          "Common.TypeName": "BlazorApp.Client.Pages.Login",
-          "Common.TypeNamespace": "BlazorApp.Client.Pages",
-          "Common.TypeNameIdentifier": "Login"
-        }
-      },
-      {
-        "HashCode": 1827464923,
-        "Kind": "Components.Component",
-        "Name": "BlazorApp.Client.Pages.Login",
-        "AssemblyName": "BlazorApp.Client",
-        "CaseSensitive": true,
-        "TagMatchingRules": [
-          {
-            "TagName": "BlazorApp.Client.Pages.Login"
-          }
-        ],
-        "Metadata": {
-          "Runtime.Name": "Components.IComponent",
-          "Common.TypeName": "BlazorApp.Client.Pages.Login",
-          "Common.TypeNamespace": "BlazorApp.Client.Pages",
-          "Common.TypeNameIdentifier": "Login",
-          "Components.NameMatch": "Components.FullyQualifiedNameMatch"
-        }
-      },
-      {
         "HashCode": -166391896,
         "Kind": "Components.Component",
         "Name": "BlazorApp.Client.Pages.Register",
@@ -7667,43 +7630,6 @@
           "Common.TypeName": "BlazorApp.Client.Pages.Register",
           "Common.TypeNamespace": "BlazorApp.Client.Pages",
           "Common.TypeNameIdentifier": "Register",
-          "Components.NameMatch": "Components.FullyQualifiedNameMatch"
-        }
-      },
-      {
-        "HashCode": 190334439,
-        "Kind": "Components.Component",
-        "Name": "BlazorApp.Client.Pages.FetchServices",
-        "AssemblyName": "BlazorApp.Client",
-        "CaseSensitive": true,
-        "TagMatchingRules": [
-          {
-            "TagName": "FetchServices"
-          }
-        ],
-        "Metadata": {
-          "Runtime.Name": "Components.IComponent",
-          "Common.TypeName": "BlazorApp.Client.Pages.FetchServices",
-          "Common.TypeNamespace": "BlazorApp.Client.Pages",
-          "Common.TypeNameIdentifier": "FetchServices"
-        }
-      },
-      {
-        "HashCode": 1191739942,
-        "Kind": "Components.Component",
-        "Name": "BlazorApp.Client.Pages.FetchServices",
-        "AssemblyName": "BlazorApp.Client",
-        "CaseSensitive": true,
-        "TagMatchingRules": [
-          {
-            "TagName": "BlazorApp.Client.Pages.FetchServices"
-          }
-        ],
-        "Metadata": {
-          "Runtime.Name": "Components.IComponent",
-          "Common.TypeName": "BlazorApp.Client.Pages.FetchServices",
-          "Common.TypeNamespace": "BlazorApp.Client.Pages",
-          "Common.TypeNameIdentifier": "FetchServices",
           "Components.NameMatch": "Components.FullyQualifiedNameMatch"
         }
       },
@@ -7874,6 +7800,80 @@
           "Common.TypeName": "BlazorApp.Client.Pages.FetchSalarier",
           "Common.TypeNamespace": "BlazorApp.Client.Pages",
           "Common.TypeNameIdentifier": "FetchSalarier",
+          "Components.NameMatch": "Components.FullyQualifiedNameMatch"
+        }
+      },
+      {
+        "HashCode": -1018824871,
+        "Kind": "Components.Component",
+        "Name": "BlazorApp.Client.Pages.Login",
+        "AssemblyName": "BlazorApp.Client",
+        "CaseSensitive": true,
+        "TagMatchingRules": [
+          {
+            "TagName": "Login"
+          }
+        ],
+        "Metadata": {
+          "Runtime.Name": "Components.IComponent",
+          "Common.TypeName": "BlazorApp.Client.Pages.Login",
+          "Common.TypeNamespace": "BlazorApp.Client.Pages",
+          "Common.TypeNameIdentifier": "Login"
+        }
+      },
+      {
+        "HashCode": 1827464923,
+        "Kind": "Components.Component",
+        "Name": "BlazorApp.Client.Pages.Login",
+        "AssemblyName": "BlazorApp.Client",
+        "CaseSensitive": true,
+        "TagMatchingRules": [
+          {
+            "TagName": "BlazorApp.Client.Pages.Login"
+          }
+        ],
+        "Metadata": {
+          "Runtime.Name": "Components.IComponent",
+          "Common.TypeName": "BlazorApp.Client.Pages.Login",
+          "Common.TypeNamespace": "BlazorApp.Client.Pages",
+          "Common.TypeNameIdentifier": "Login",
+          "Components.NameMatch": "Components.FullyQualifiedNameMatch"
+        }
+      },
+      {
+        "HashCode": 190334439,
+        "Kind": "Components.Component",
+        "Name": "BlazorApp.Client.Pages.FetchServices",
+        "AssemblyName": "BlazorApp.Client",
+        "CaseSensitive": true,
+        "TagMatchingRules": [
+          {
+            "TagName": "FetchServices"
+          }
+        ],
+        "Metadata": {
+          "Runtime.Name": "Components.IComponent",
+          "Common.TypeName": "BlazorApp.Client.Pages.FetchServices",
+          "Common.TypeNamespace": "BlazorApp.Client.Pages",
+          "Common.TypeNameIdentifier": "FetchServices"
+        }
+      },
+      {
+        "HashCode": 1191739942,
+        "Kind": "Components.Component",
+        "Name": "BlazorApp.Client.Pages.FetchServices",
+        "AssemblyName": "BlazorApp.Client",
+        "CaseSensitive": true,
+        "TagMatchingRules": [
+          {
+            "TagName": "BlazorApp.Client.Pages.FetchServices"
+          }
+        ],
+        "Metadata": {
+          "Runtime.Name": "Components.IComponent",
+          "Common.TypeName": "BlazorApp.Client.Pages.FetchServices",
+          "Common.TypeNamespace": "BlazorApp.Client.Pages",
+          "Common.TypeNameIdentifier": "FetchServices",
           "Components.NameMatch": "Components.FullyQualifiedNameMatch"
         }
       },
