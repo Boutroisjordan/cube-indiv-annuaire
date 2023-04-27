@@ -19,7 +19,6 @@
         <span class="iconify" data-icon="bx:bx-plus"></span> Ajouter
     </button>
 } else {
-    <lottie-player src="https://assets10.lottiefiles.com/packages/lf20_k8WCTV.json"  background="transparent"  speed="2"  style="width: 300px; height: 300px;"  loop autoplay></lottie-player>
 
      <button @onclick="ShowModal" type="button" class="btn btn-primary">
   <span class="iconify" data-icon="bx:bx-plus"></span> Ajouter
@@ -39,8 +38,8 @@
                     <td>@site.Id</td>
                     <td>@site.Name</td>
                     <td>
-                         <button @onclick="async () => await Delete(site)" type="button" class="btn btn-danger">Delete</button>
-                         <button @onclick="() =>OpenUpdateModal(site)" type="button" class="btn btn-secondary">Update</button> 
+                         <button @onclick="() => OpenDeleteModal(site)" type="button" class="btn btn-danger">Delete</button>
+                         <button @ref="btnCount" @onclick="() =>OpenUpdateModal(site)" type="button" class="btn btn-secondary">Update</button> 
 
                         @* <button type="button" class="btn btn-danger">Delete</button> *@
                     </td>
@@ -55,15 +54,17 @@
 
 <ModalCreateSiteComponent @ref="modal" OnSiteCreated="RefreshSites" />
 <ModalUpdateSiteComponent @ref="modalUpdate" siteModel="@currentUpdateSite" OnSiteCreated="RefreshSites" />
+<ModalDeleteSiteComponent @ref="modalDelete" siteModel="@currentUpdateSite" OnSiteCreated="RefreshSites" />
 
 <ToastComponent @ref="toast" ToastMessage="Message"/>
 
 
 @code {
-
+    ElementReference btnCount;
     private bool Loader = true;
     private ModalCreateSiteComponent? modal;
     private ModalUpdateSiteComponent? modalUpdate;
+    private ModalDeleteSiteComponent? modalDelete;
 
     private Site[]? sites;
     private Site? currentUpdateSite;
@@ -74,9 +75,11 @@
 
     private ToastMessage Message = new ToastMessage("test", "test", DateTime.Now);
     private ToastComponent? toast;
+    // Fonction qui sera appelée pour décrémenter la variable compte
 
     protected override async Task OnInitializedAsync()
     {
+
         try {
         var result = await Http.GetAsync("api/Site");
 
@@ -96,6 +99,7 @@
 
     }
 
+
     private async Task Delete(Site site)
     {
         var response = await Http.DeleteAsync($"api/Site/{site.Id}");
@@ -110,7 +114,6 @@
                 // Mettre à jour localement la liste des sites après la suppression
                 sites = sites?.Where(s => s.Id != site.Id).ToArray();
                 toast?.ShowToast();
-                Console.WriteLine("ohhhhhhhhh");
 
             }
         }
@@ -125,6 +128,12 @@
     {
         currentUpdateSite = site;
         modalUpdate?.ShowModal();
+
+    }
+    private void OpenDeleteModal(Site site)
+    {
+        currentUpdateSite = site;
+        modalDelete?.ShowModal();
 
     }
     private void ShowModal()

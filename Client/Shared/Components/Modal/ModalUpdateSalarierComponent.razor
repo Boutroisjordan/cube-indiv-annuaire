@@ -17,23 +17,23 @@
         <div class="modal-body">
           <div class="form-group">
             <label for="first_name">Prénom</label>
-            <input @bind-value="@newFirstName" type="text" class="form-control" id="first_name" name="first_name" placeholder="Prénom">
+            <input @bind-value="@newFirstName" @bind-value:event="oninput" type="text" class="form-control" id="first_name" name="first_name" placeholder="Prénom">
           </div>
           <div class="form-group">
             <label for="last_name">Nom</label>
-            <input @bind-value:event="oninput" @bind-value="@newLastName"type="text" class="form-control" id="last_name" name="last_name" placeholder="Nom">
+            <input @bind-value="@newLastName" @bind-value:event="oninput" type="text" class="form-control" id="last_name" name="last_name" placeholder="Nom">
           </div>
           <div class="form-group">
             <label for="phone">Téléphone Fixe</label>
-            <input @bind-value:event="oninput" @bind-value="@newFixPhoneNumber" type="tel" class="form-control" id="phone" name="phone" placeholder="Téléphone">
+            <input @bind-value="@newFixPhoneNumber" type="tel" class="form-control" id="phone" name="phone" placeholder="Téléphone">
           </div>
           <div class="form-group">
             <label for="portablePhone">Téléphone portable</label>
-            <input @bind-value:event="oninput" @bind-value="@newPhoneNumber" type="tel" class="form-control" id="portablePhone" name="portablePhone" placeholder="Téléphone portable">
+            <input @bind-value="@newPhoneNumber" @bind-value:event="oninput" type="tel" class="form-control" id="portablePhone" name="portablePhone" placeholder="Téléphone portable">
           </div>
           <div class="form-group">
             <label for="email">Email</label>
-            <input @bind-value:event="oninput" @bind-value="@newEmail" type="email" class="form-control" id="email" name="email" placeholder="Email">
+            <input @bind-value="@newEmail" @bind-value:event="oninput" type="email" class="form-control" id="email" name="email" placeholder="Email">
           </div>
           <div class="form-group">
             <label for="site">Site</label>
@@ -44,19 +44,19 @@
 
               @foreach (var site in sites) {
 
-              <option value="@($"{site.Id}")">@site.Name</option>
+              <option value="@($"{site.Id}")">@site.Name </option>
               }
               }
             </select>
           </div>
           <div class="form-group">
-            <label for="service">Service</label>
+            <label for="service">Service id:</label>
             <select @bind="@serviceId" class="form-control" id="service" name="service">
               <option value="0">Choisis un service</option>
               @if(services != null) {
               @foreach (var service in services) {
 
-              <option value="@($"{service.Id}")">@service.Name</option>
+              <option value="@($"{service.Id}")">@service.Name  </option>
               }
               }
             </select>
@@ -81,23 +81,44 @@
   public string? modalType {get; set;}
 
   [Parameter]
+  public Salarier? salarierModel {get; set;}
+
+
+  [Parameter]
   public EventCallback OnSalarierCreated { get; set; }
 
-  private string newFirstName = " ";
-  private string newLastName = " ";
-  private string newFixPhoneNumber = " ";
-  private string newPhoneNumber = " ";
-  private string newEmail = " ";
-  private int serviceId;
-  private int siteId;
+  private string? newFirstName = " ";
+  private string? newLastName = " ";
+  private string? newFixPhoneNumber = " ";
+  private string? newPhoneNumber = " ";
+  private string? newEmail = " ";
+  private int? serviceId;
+  private int? siteId;
   private Service[]? services;
   private Site[]? sites;
+
+  public int? updateSalarierId;
+
 
   private ToastComponent? toast;
   private ToastMessage Message = new ToastMessage("", "", DateTime.Now);
 
 
+protected override void OnParametersSet()
+{
+    // Accédez aux valeurs du modèle "Site" à l'aide de la propriété "SiteModel"
 
+
+  newFirstName = salarierModel?.first_name;
+   newLastName = salarierModel?.last_name;
+   newFixPhoneNumber = salarierModel?.fixPhone;
+   newPhoneNumber = salarierModel?.portablePhone;
+   newEmail = salarierModel?.email;
+   serviceId = salarierModel?.serviceId;
+   siteId = salarierModel?.siteId;
+   updateSalarierId = salarierModel?.Id;
+
+}
 
   protected override async Task OnInitializedAsync()
   {
@@ -130,17 +151,17 @@
             portablePhone = newPhoneNumber,
             fixPhone = newFixPhoneNumber,
             email = newEmail,
-            serviceId = serviceId,
-            siteId = siteId
+            serviceId = serviceId ?? 0,
+            siteId = siteId ?? 0
         };
 
-        var response = await Http.PostAsJsonAsync("api/Salarier", request);
+        var response = await Http.PutAsJsonAsync($"api/Salarier/{updateSalarierId}", request);
 
         if (response.IsSuccessStatusCode)
         {
             var result = await response.Content.ReadFromJsonAsync<Salarier>();
             if(result != null) {
-              ShowSuccessToast($"{result.email} a été créé avec succès");
+              ShowSuccessToast($"{result.email} a été mis à jour avec succès");
             }
             await OnSalarierCreated.InvokeAsync();
         }
@@ -152,7 +173,7 @@
 
     }
 
-            private void ShowErrorToast(string message)
+    private void ShowErrorToast(string message)
     {
         Message = new ToastMessage("Error", message, DateTime.Now);
         toast?.ShowToast();

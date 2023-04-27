@@ -5,11 +5,10 @@
 @inject NavigationManager NavigationManager
 
 
-<a href="salariers" class="btn btn-secondary">
+<a href="/" class="btn btn-secondary">
    <span class="oi oi-arrow-thick-left" ></span>
    Retour
 </a>
-<h1> ID du salarier @Id</h1>
 
 @if (salarier is null)
 {
@@ -22,13 +21,12 @@ else
 		<hr />
 
 		<div class="row">
-			<div class="col-md-6">
+			<div class="col">
 				<h3>Informations personnelles</h3>
 				<hr />
 				<dl class="row">
 					<dt class="col-sm-3">Nom complet</dt>
 					<dd class="col-sm-9">@salarier.last_name @salarier.first_name</dd>
-
 
 					<dt class="col-sm-3">Email</dt>
 					<dd class="col-sm-9">@salarier.email</dd>
@@ -39,6 +37,11 @@ else
 					<dt class="col-sm-3">téléphone portable</dt>
 					<dd class="col-sm-9">@salarier.portablePhone</dd>
 
+					<dt class="col-sm-3">Site</dt>
+					<dd class="col-sm-9">@salarier.site?.Name</dd>
+
+					<dt class="col-sm-3">Service</dt>
+					<dd class="col-sm-9">@salarier.service?.Name</dd>
 
 				</dl>
 			</div>

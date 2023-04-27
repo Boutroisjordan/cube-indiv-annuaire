@@ -50,7 +50,7 @@
 //             var result = await _http.PostAsync<AuthenticateResponse>("api/Auth/login", new StringContent(JsonSerializer.Serialize(new { username, password }), Encoding.UTF8, "application/json"));
 
 //             // var token = await result.Content.ReadAsStringAsync();
-//             // Console.WriteLine($"tokenval: {token}");
+//             // Line($"tokenval: {token}");
 //             // await LocalStorage.SetItemAsync("token", token);
 //             // await AuthStateProvider.GetAuthenticationStateAsync();
 //             // NavigationManager.NavigateTo("/");

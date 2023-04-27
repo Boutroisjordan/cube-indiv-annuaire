@@ -2,6 +2,10 @@
 @using BlazorApp.Shared.Models
 @inject HttpClient Http
 @attribute [Authorize]
+@using Blazored.SessionStorage;
+@inject AuthenticationStateProvider authstateProvider
+@using BlazorApp.Client.Authentication
+
 
 <PageTitle>Services</PageTitle>
 
@@ -13,7 +17,6 @@
   <p><em>Loading... </em></p>
 } else {
     
-
      <button @onclick="ShowModal" type="button" class="btn btn-primary">
   <span class="iconify" data-icon="bx:bx-plus"></span> Ajouter
 </button>
@@ -35,7 +38,9 @@
                     <td>@service.Id</td>
                     <td>@service.Name</td>
                     <td>
-                         <button @onclick="async () => await Delete(service)" type="button" class="btn btn-danger">Delete</button> 
+                         <button @onclick="() => OpenDeleteModal(service)" type="button" class="btn btn-danger">Delete</button>
+
+                         @* <button @onclick="async () => await Delete(service)" type="button" class="btn btn-danger">Delete</button>  *@
                          <button @onclick="() =>OpenUpdateModal(service)" type="button" class="btn btn-secondary">Update</button> 
                         
                         @* <button type="button" class="btn btn-danger">Delete</button> *@
@@ -53,6 +58,8 @@
 <ModalCreateServiceComponent @ref="modal" OnServiceCreated="RefreshServices" />
 <ModalUpdateServiceComponent @ref="modal2" serviceModel="currentUpdateService"  OnServiceCreated="RefreshServices" />
 <ToastComponent @ref="toast" ToastMessage="Message"/>
+<ModalDeleteServiceComponent @ref="modal3" serviceModel="@currentUpdateService" OnServiceCreated="RefreshServices" />
+
 
 
 @code {
@@ -60,6 +67,7 @@
     private bool Loader = true;
     private ModalCreateServiceComponent? modal;
     private ModalUpdateServiceComponent? modal2;
+    private ModalDeleteServiceComponent? modal3;
 
     private Service[]? services;
     private Service? currentUpdateService;
@@ -135,6 +143,13 @@
             var servicesResult = await result.Content.ReadFromJsonAsync<Service[]>();
             services = servicesResult;
         }
+    }
+
+   private void OpenDeleteModal(Service service)
+    {
+        currentUpdateService = service;
+        modal3?.ShowModal();
+
     }
 }
 

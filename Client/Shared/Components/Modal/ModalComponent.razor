@@ -95,6 +95,7 @@
   public string? modalType {get; set;}
   public async void ShowModal()
   {
+
     await JsRuntime.InvokeVoidAsync("ShowModal", modalRef);
   }
 }

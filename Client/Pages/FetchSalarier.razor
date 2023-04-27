@@ -2,6 +2,7 @@
 @using BlazorApp.Shared.Models
 @inject HttpClient Http
 @attribute [Authorize]
+@inject NavigationManager NavigationManager
 
 
 <PageTitle>Salariers</PageTitle>
@@ -46,8 +47,11 @@
                     <td>@salarier.email</td>
                     <td>
                          <button @onclick="async () => await Delete(salarier)" type="button" class="btn btn-danger">Delete</button> 
-                         @* <a href="salariers/@(salarier.Id)">View more</a> *@
-                         <a href="@($"/salariers/{salarier.Id}")">View Details</a>
+                         <button @onclick="() =>OpenUpdateModal(salarier)" type="button" class="btn btn-secondary">Update</button> 
+                         <button @onclick="() => handleShowSalarierDetails(salarier.Id)" type="button" class="btn btn-primary">Details</button> 
+                         
+                         
+                         
                         @* <button type="button" class="btn btn-danger">Delete</button> *@
                     </td>
                 </tr>
@@ -59,12 +63,17 @@
 
 }
 <ModalCreateSalarierComponent @ref="modal" modalType="salarier" OnSalarierCreated="RefreshSalariers" />
+<ModalUpdateSalarierComponent @ref="modal2" modalType="salarier" salarierModel="currentUpdateSalarier" OnSalarierCreated="RefreshSalariers" />
 
 @code {
     private Salarier[]? salariers;
     private string? errorMessage;
     private string? successMessage;
     private ModalCreateSalarierComponent? modal;
+    private ModalUpdateSalarierComponent? modal2;
+
+    private Salarier? currentUpdateSalarier;
+
 
 
     private string? FetchErrorMessage {get; set;}
@@ -116,6 +125,12 @@
             toast?.ShowToast();
         }
     }
+    private void OpenUpdateModal(Salarier salarier)
+    {
+        currentUpdateSalarier = salarier;
+        modal2?.ShowModal();
+
+    }
 
     private void ShowModal()
     {
@@ -132,5 +147,12 @@
             salariers = salarierResult;
         }
     }
+
+    private void handleShowSalarierDetails(int id) {
+        NavigationManager.NavigateTo($"/salariers/{id}");
+        
+    }
+
+    
 }
 

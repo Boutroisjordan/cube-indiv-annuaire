@@ -25,6 +25,10 @@
       "PackagePath": "staticwebassets/Images/cross.svg"
     },
     {
+      "Id": "/Users/jordanboutrois/Documents/DEV/cube-indiv/BlazorApp/Client/wwwroot/Images/warning-circle-svgrepo-com.svg",
+      "PackagePath": "staticwebassets/Images/warning-circle-svgrepo-com.svg"
+    },
+    {
       "Id": "/Users/jordanboutrois/Documents/DEV/cube-indiv/BlazorApp/Client/wwwroot/css/app.css",
       "PackagePath": "staticwebassets/css/app.css"
     },

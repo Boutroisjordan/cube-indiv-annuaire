@@ -44,10 +44,6 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXMvTG9naW4ucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/jordanboutrois/Documents/DEV/cube-indiv/BlazorApp/Client/Pages/Login2.razor]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXMvTG9naW4yLnJhem9y
-build_metadata.AdditionalFiles.CssScope = 
-
 [/Users/jordanboutrois/Documents/DEV/cube-indiv/BlazorApp/Client/Pages/Register.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXMvUmVnaXN0ZXIucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
@@ -70,6 +66,18 @@ build_metadata.AdditionalFiles.CssScope =
 
 [/Users/jordanboutrois/Documents/DEV/cube-indiv/BlazorApp/Client/Shared/Components/Modal/ModalCreateSiteComponent.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL0NvbXBvbmVudHMvTW9kYWwvTW9kYWxDcmVhdGVTaXRlQ29tcG9uZW50LnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/jordanboutrois/Documents/DEV/cube-indiv/BlazorApp/Client/Shared/Components/Modal/ModalDeleteServiceComponent.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL0NvbXBvbmVudHMvTW9kYWwvTW9kYWxEZWxldGVTZXJ2aWNlQ29tcG9uZW50LnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/jordanboutrois/Documents/DEV/cube-indiv/BlazorApp/Client/Shared/Components/Modal/ModalDeleteSiteComponent.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL0NvbXBvbmVudHMvTW9kYWwvTW9kYWxEZWxldGVTaXRlQ29tcG9uZW50LnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/jordanboutrois/Documents/DEV/cube-indiv/BlazorApp/Client/Shared/Components/Modal/ModalUpdateSalarierComponent.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL0NvbXBvbmVudHMvTW9kYWwvTW9kYWxVcGRhdGVTYWxhcmllckNvbXBvbmVudC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
 [/Users/jordanboutrois/Documents/DEV/cube-indiv/BlazorApp/Client/Shared/Components/Modal/ModalUpdateServiceComponent.razor]

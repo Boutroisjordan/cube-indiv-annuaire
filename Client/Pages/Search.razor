@@ -1,12 +1,18 @@
-﻿@page "/search"
+﻿@page "/"
 @using System.Linq
 @using BlazorApp.Shared.Models
 @inject HttpClient Http
+@inject NavigationManager NavigationManager
 
 
 
 <h1>Recherche de salariers</h1>
-<p>SearchTerm @searchTerm</p>
+<AuthorizeView>
+<div class="d-flex flex-row-reverse">
+
+    <button @onclick="ShowModal" type="button" class="btn btn-primary">+ Ajouter Salarier</button>
+</div>
+</AuthorizeView>
 <div class="row">
     <div class="col-sm-6">
         @* <input type="text" class="form-control" placeholder="Recherche par nom" @bind-value="@searchTerm" @bind-value:event="oninput" onchange="@(() => Rechercher())"/> *@
@@ -18,7 +24,6 @@
     <div class="col-sm-6">
         <h4>Sites</h4>
         @if(sites != null) {
-            <p>Choix site ID: @selectedSite</p>
             @* <div class="form-check">
 
                 <label class="form-check-label">All</label>
@@ -43,8 +48,6 @@
         <h4>Services</h4>
         @if(services != null) {
           
-
-            <p>Choix service ID: @selectedService</p>
             @* <div class="form-check">
                 <label class="form-check-label">All</label>
                 <input class="form-check-input" type="radio" name="serviceRadio" value="0" @onchange="@(e => HandleServiceChange(0))" checked/>
@@ -94,6 +97,7 @@
                 <th>Email</th>
                 <th>Site</th>
                 <th>Service</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -112,6 +116,14 @@
 
                     <td>@salarier.service.Name</td>
                     }
+
+                    <td>
+                    <AuthorizeView>
+                    <button @onclick="async () => await Delete(salarier)" type="button" class="btn btn-danger">Delete</button> 
+                        <button @onclick="() =>OpenUpdateModal(salarier)" type="button" class="btn btn-secondary">Update</button> 
+                    </AuthorizeView>
+                        <button @onclick="() => handleShowSalarierDetails(salarier.Id)" type="button" class="btn btn-primary">Details</button> 
+                    </td>
                 </tr>
             }
             }
@@ -123,6 +135,10 @@ else
     <p>Aucun salarié ne correspond aux critères de recherche.</p>
 }
 
+<ModalUpdateSalarierComponent @ref="modal2" modalType="salarier" salarierModel="currentUpdateSalarier" OnSalarierCreated="RefreshSalariers" />
+<ModalCreateSalarierComponent @ref="modal" modalType="salarier" OnSalarierCreated="RefreshSalariers" />
+
+
 @code {
     private List<Salarier>? salarierList = new List<Salarier>();
     private List<Salarier>? filteredSalarier = new List<Salarier>();
@@ -131,6 +147,17 @@ else
     private string? searchTerm = "";
     private int? selectedSite = 0;
     private int? selectedService = 0;
+
+    private ModalCreateSalarierComponent? modal;
+    private ModalUpdateSalarierComponent? modal2;
+    private Salarier? currentUpdateSalarier;
+        private ToastMessage Message = new ToastMessage("test", "test", DateTime.Now);
+    private ToastComponent? toast;
+
+    private string? errorMessage;
+    private string? successMessage;
+
+
 
     protected override async Task OnInitializedAsync()
     {
@@ -252,10 +279,62 @@ else
         }
         Rechercher();
     }
-    @* private void HandleServiceChange(int serviceId) {
-        selectedService = serviceId;
-        Rechercher();
-    } *@
+
+private async Task Delete(Salarier salarier)
+    {
+        var response = await Http.DeleteAsync($"api/Salarier/{salarier.Id}");
+
+        if (response.IsSuccessStatusCode)
+        {
+
+            var result = await response.Content.ReadFromJsonAsync<Salarier>();
+            if(result != null) {
+                Message = new ToastMessage("Success", $"{salarier.email} a été supprimer avec succès", DateTime.Now);
+
+                // Mettre à jour localement la liste des salariers après la suppression
+                salarierList = salarierList?.Where(s => s.Id != salarier.Id).ToList();
+                filteredSalarier = salarierList;
+                Rechercher();
+                
+                toast?.ShowToast();
+
+            }
+        }
+        else
+        {
+            errorMessage = await response.Content.ReadAsStringAsync();
+            Message = new ToastMessage("Error", $"{errorMessage}", DateTime.Now);
+            toast?.ShowToast();
+        }
+    }
+    private void OpenUpdateModal(Salarier salarier)
+    {
+        currentUpdateSalarier = salarier;
+        modal2?.ShowModal();
+    }
+
+       private void handleShowSalarierDetails(int id) {
+        NavigationManager.NavigateTo($"/salariers/{id}");
+        
+    }
+
+        private async Task RefreshSalariers()
+    {
+        var result = await Http.GetAsync("api/Salarier");
+
+        if (result.IsSuccessStatusCode)
+        {
+            var salarierResult = await result.Content.ReadFromJsonAsync<List<Salarier>>();
+            salarierList = salarierResult;
+            filteredSalarier = salarierList;
+            Rechercher();
+        }
+    }
+
+    private void ShowModal()
+    {
+        modal?.ShowModal();
+    }
 }
 
  

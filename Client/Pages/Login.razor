@@ -1,36 +1,81 @@
-﻿@page "/login2"
+﻿@page "/login"
 @using BlazorApp.Shared.Models
-@using Blazored.LocalStorage
+@using BlazorApp.Client.Authentication
 @inject HttpClient Http
-@inject AuthenticationStateProvider AuthStateProvider
-@inject ILocalStorageService LocalStorage
-@inject NavigationManager NavigationManager
 
+@inject IJSRuntime JsRuntime;
+@inject AuthenticationStateProvider authstateProvider
+@inject NavigationManager navManager
+<AuthorizeView>
+    <Authorized>
+        <p>Vous êtes déjà connecter</p>
+    </Authorized>
+    <NotAuthorized>
+<h3>Login</h3>
 
-<PageTitle>login</PageTitle>
-
-
-    <div class="container">
-        <h2>Login</h2>
-<EditForm Model="user" OnSubmit="HandleLogin">
-    <label for="username">Name</label>
-    <InputText id="username" @bind-Value="user.Username" />
+  <div class="form-group">
+    <label for="username">Username</label>
+    <input @bind-value:event="oninput" @bind-value="user.Username" type="text" class="form-control" id="username" placeholder="Enter username">
+  </div>
+  <div class="form-group">
     <label for="password">Password</label>
-    <InputText id="password" @bind-Value="user.Password" type="password" />
-    <button type="submit" class="btn btn-primary">Do it!</button>
-</EditForm>
-    </div>
+    <input type="password" class="form-control" @bind-value="user.Password"  @bind-value:event="oninput" id="password" placeholder="Password">
+  </div>
+  <button class="btn btn-primary" @onclick="HandleLogin" >Submit</button>
 
-    @code {
-    UserDToLogin user = new UserDToLogin();
 
-    async Task HandleLogin()
+@if(isSuccesLogging) {
+
+        <div style="width: calc(100% - 250px); height: 100vh; position: absolute; top: 0; right: 0, bottom: 0; display: flex; justify-content: center; align-items: center; z-index: 2222; pointer-events: none;">
+            <lottie-player src="https://assets8.lottiefiles.com/packages/lf20_aKqPXoEqQY.json" background="transparent" speed="1"
+                style="width: 100%; height: 100%; " loop autoplay ></lottie-player>
+        </div>
+}
+
+<ToastComponent @ref="toast" ToastMessage="Message"/>
+
+    </NotAuthorized>
+</AuthorizeView>
+
+
+@code {
+ElementReference anim;
+UserDToLogin user = new UserDToLogin();
+bool isSuccesLogging = false;
+    private ToastMessage Message = new ToastMessage("test", "test", DateTime.Now);
+    private ToastComponent? toast;
+
+async Task HandleLogin()
+{
+    var result = await Http.PostAsJsonAsync("api/Auth/login", user);
+    if (result.IsSuccessStatusCode)
     {
-        var result = await Http.PostAsJsonAsync("api/Auth/login", user);
-        var token = await result.Content.ReadAsStringAsync();
-        await LocalStorage.SetItemAsync("token", token);
-        await AuthStateProvider.GetAuthenticationStateAsync();
-        NavigationManager.NavigateTo("/");
+        isSuccesLogging = true;
+         StateHasChanged(); 
 
+        await Task.Delay(2000);
+
+         isSuccesLogging = false;
+        StateHasChanged(); // rafraîchir le composant pour masquer l'animation *@
+
+        var userSession = await result.Content.ReadFromJsonAsync<UserSession>();
+        var customAuthStateProvider = (CustomAuthenticationStateProvider)authstateProvider;
+        await customAuthStateProvider.UpdateAuthenticationState(userSession);
+
+        navManager.NavigateTo("/", true);
     }
+    else 
+    {
+        var errorMessage = await result.Content.ReadAsStringAsync();
+        ShowErrorToast(errorMessage);
+        return;
+    }
+}
+
+        private void ShowErrorToast(string message)
+    {
+        Message = new ToastMessage("Error", message, DateTime.Now);
+        toast?.ShowToast();
+    }
+
 }

@@ -5,6 +5,7 @@
 @inject IJSRuntime Json
 @inject AuthenticationStateProvider authStateProvider
 @inject NavigationManager navManager
+@using System.Threading.Tasks
 
 <div class="page">
     <div class="sidebar">
@@ -12,16 +13,14 @@
     </div>
 
     <main>
-        <div class="top-row px-4">
-            <a href="register">Register</a>
+        <div class="top-row d-flex flex-row px-4 align-items-center" style="gap: 0.5rem;">
+            <a href="register" class="btn btn-primary">Register</a>
             <AuthorizeView>
                 <Authorized>
-
             <button class="btn btn-primary" @onclick="HandleLogout" >Logout</button>
                 </Authorized>
                 <NotAuthorized>
-
-            <a href="login">Login</a>
+            <a href="login" class="btn btn-primary">Login</a>
                 </NotAuthorized>
             </AuthorizeView>
         </div>
@@ -33,6 +32,7 @@
 </div>
 
 @code {
+
     async Task HandleLogout()
     {
         var customAuthStateProvider = (CustomAuthenticationStateProvider)authStateProvider;

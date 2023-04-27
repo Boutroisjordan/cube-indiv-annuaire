@@ -10,19 +10,11 @@
 <div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
     <nav class="flex-column">
         <div class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="oi oi-home" aria-hidden="true"></span> Home
-            </NavLink>
         </div>
         <AuthorizeView>
         <div class="nav-item px-3">
             <NavLink class="nav-link" href="sites">
                 <span class="oi oi-home" aria-hidden="true"></span> Sites
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="salariers">
-                <span class="oi oi-people" aria-hidden="true"></span> Salariers
             </NavLink>
         </div>
         <div class="nav-item px-3">
@@ -32,8 +24,11 @@
         </div>
         </AuthorizeView>
         <div class="nav-item px-3">
-            <NavLink class="nav-link" href="search">
+            @* <NavLink class="nav-link" href="">
                 <span class="oi oi-people" aria-hidden="true"></span> Search
+            </NavLink> *@
+                        <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+                <span class="oi oi-home" aria-hidden="true"></span> Search
             </NavLink>
         </div>
     </nav>

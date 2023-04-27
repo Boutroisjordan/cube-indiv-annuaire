@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "a/oyWKPxyWwCaknsdo8hF7QDpmGJ0Ou5CvRDoT56cGE=",
+  "Hash": "Q1Z//biJE6OiaXrOGbK49iQXq4KJESrIvE1Tg6DHoCY=",
   "Source": "BlazorApp.Client",
   "BasePath": "/",
   "Mode": "Root",
@@ -7410,6 +7410,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot/Images/cross.svg"
+    },
+    {
+      "Identity": "/Users/jordanboutrois/Documents/DEV/cube-indiv/BlazorApp/Client/wwwroot/Images/warning-circle-svgrepo-com.svg",
+      "SourceId": "BlazorApp.Client",
+      "SourceType": "Discovered",
+      "ContentRoot": "/Users/jordanboutrois/Documents/DEV/cube-indiv/BlazorApp/Client/wwwroot/",
+      "BasePath": "/",
+      "RelativePath": "Images/warning-circle-svgrepo-com.svg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/Images/warning-circle-svgrepo-com.svg"
     },
     {
       "Identity": "/Users/jordanboutrois/Documents/DEV/cube-indiv/BlazorApp/Client/wwwroot/index.html",

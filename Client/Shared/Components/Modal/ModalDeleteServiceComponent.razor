@@ -1,29 +1,28 @@
 @inject IJSRuntime JsRuntime;
 @using BlazorApp.Shared.Models
 @inject HttpClient Http
-@using Blazored.SessionStorage;
-
-
 
 
 <!-- Modal -->
-<div @ref="modalRef" class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div @ref="modalRef" class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="border: 2px solid #f90606;">
   <div class="modal-dialog modal-dialog-centered" >
-    <div class="modal-content">
+    <div class="modal-content" style="border: 2px solid #f90606;">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel">Mettre à jour un Site</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <h1 class="modal-title fs-5" id="exampleModalLabel" >
+          @* <img src="../../../wwwroot/Images/warning-circle-svgrepo-com.svg" /> *@
+          <svg width="30px" height="30px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M12 16.99V17M12 7V14M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="#f90606" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+           Supprimer un Service</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="color: #f90606;"></button>
       </div>
         <form @onsubmit="SubmitForm">
         <div class="modal-body">
-          <div class="form-group">
-            <label for="first_name">Nom du service</label>
-            <input @bind-value="newElementName" @bind-value:event="oninput" type="text" class="form-control" id="first_name" name="first_name" placeholder="Nom">
-          </div>
+          <p>Vous êtes sur le point de suprimer un service et tout les salarier associé à ce service. Cette action est irréversible.</p>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close">Annuler</button>
-          <button type="submit" class="btn btn-primary" data-bs-dismiss="modal" aria-label="Close">Enregistrer</button>
+          <button type="submit" class="btn btn-danger" data-bs-dismiss="modal" aria-label="Close">Confirm Delete</button>
         </div>
       </form>
     </div>
@@ -40,7 +39,9 @@ public EventCallback OnServiceCreated { get; set; }
 
 [Parameter]
 public Service? serviceModel {get; set;}
-ElementReference modalRef;
+
+
+  ElementReference modalRef;
   private string? newElementName;
   private int? updateServiceId;
 
@@ -48,8 +49,13 @@ ElementReference modalRef;
   private ToastComponent? toast;
   private ToastMessage Message = new ToastMessage("", "", DateTime.Now);
 
+
+    // Fonction qui sera appelée pour décrémenter la variable compte
+
+
 protected override void OnParametersSet()
 {
+
     // Accédez aux valeurs du modèle "Site" à l'aide de la propriété "SiteModel"
     newElementName = serviceModel?.Name;
     updateServiceId = serviceModel?.Id;
@@ -65,26 +71,21 @@ protected override void OnParametersSet()
 
 private async Task SubmitForm()
     {
-
-        SiteDToUpdate request = new SiteDToUpdate() {
-            Name = newElementName
-        };
-
-
-        
-        var response = await Http.PutAsJsonAsync($"api/Service/{updateServiceId}", request);
+        var response = await Http.DeleteAsync($"api/Service/{serviceModel?.Id}");
 
         if (response.IsSuccessStatusCode)
         {
+
             var result = await response.Content.ReadFromJsonAsync<Service>();
             if(result != null) {
               ShowSuccessToast($"{result.Name} a été mis à jour avec succès");
+              await OnServiceCreated.InvokeAsync();
+
             }
-            await OnServiceCreated.InvokeAsync();
         }
         else
         {
-          var responseMsg = await response.Content.ReadAsStringAsync();
+           var responseMsg = await response.Content.ReadAsStringAsync();
           ShowErrorToast(responseMsg);
         }
 

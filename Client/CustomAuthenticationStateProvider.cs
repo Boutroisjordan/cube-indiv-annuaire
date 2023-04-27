@@ -7,6 +7,9 @@ using BlazorApp.Client.Extensions;
 using Blazored.SessionStorage;
 using Microsoft.AspNetCore.Components.Authorization;
 using BlazorApp.Shared.Models;
+using System.Net.Http.Headers;
+
+
 
 namespace BlazorApp.Client.Authentication;
 
@@ -40,7 +43,11 @@ public class CustomAuthenticationStateProvider : AuthenticationStateProvider
       // new Claim(ClaimTypes.Role, userSession.Role),
     }, "JwtAuth"));
 
-    return await Task.FromResult(new AuthenticationState(claimsPrincipal));
+
+      _http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", userSession.Token);
+
+
+      return await Task.FromResult(new AuthenticationState(claimsPrincipal));
     }
     catch
     {
@@ -82,4 +89,3 @@ public class CustomAuthenticationStateProvider : AuthenticationStateProvider
       return result;
   }
 }
-// https://youtu.be/7P_eyz4mEmA?t=950
