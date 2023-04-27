@@ -101,11 +101,11 @@ public class ServiceController : ControllerBase
         return Ok(result);
     }
 
-    // /// <summary>
-    // /// Supprime le site
-    // /// </summary>
-    // // [Authorize(Roles = "Admin")]
-    [HttpDelete]
+  // /// <summary>
+  // /// Supprime le site
+  // /// </summary>
+  // // [Authorize(Roles = "Admin")]
+  [HttpDelete, Authorize]
   [Route("{id}"), Authorize]
     public async Task<IActionResult> Delete(int id)
     {

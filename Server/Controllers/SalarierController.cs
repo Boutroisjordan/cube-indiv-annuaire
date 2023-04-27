@@ -56,21 +56,21 @@ public class SalarierController : ControllerBase
         return Ok(result);
     }
 
-    // /// <summary>
-    // /// Récupère un site par son nom
-    // /// </summary>
-    // [HttpGet]
-    // [Route("name/{label}")]
-    // public async Task<IActionResult> GetByLabel(string label)
-    // {
-    //     return Ok();
-    // }
+  // /// <summary>
+  // /// Récupère un site par son nom
+  // /// </summary>
+  // [HttpGet]
+  // [Route("name/{label}")]
+  // public async Task<IActionResult> GetByLabel(string label)
+  // {
+  //     return Ok();
+  // }
 
-    // /// <summary>
-    // /// Créer un type d'alcool
-    // /// </summary>
-    // // [Authorize(Roles = "Admin")]
-    [HttpPost]
+  // /// <summary>
+  // /// Créer un type d'alcool
+  // /// </summary>
+  // // [Authorize(Roles = "Admin")]
+  [HttpPost, Authorize]
     public async Task<IActionResult> Add(SalarierDToRegister request)
   {
 
@@ -91,7 +91,7 @@ public class SalarierController : ControllerBase
     // /// </summary>
     // // [Authorize(Roles = "Admin")]
    [HttpPut]
-    [Route("{id}")]
+  [Route("{id}"), Authorize]
     public async Task<IActionResult> Update(int id, SalarierDToRegister request)
     {
         var checkAvailability = await _salarierService.CheckEmailAvailabilityUpdateDTO(id, request);
@@ -104,11 +104,11 @@ public class SalarierController : ControllerBase
         return Ok(result);
     }
 
-    // /// <summary>
-    // /// Supprime le site
-    // /// </summary>
-    // // [Authorize(Roles = "Admin")]
-    [HttpDelete]
+  // /// <summary>
+  // /// Supprime le site
+  // /// </summary>
+  // // [Authorize(Roles = "Admin")]
+  [HttpDelete, Authorize]
     [Route("{id}")]
     public async Task<IActionResult> Delete(int id)
     {

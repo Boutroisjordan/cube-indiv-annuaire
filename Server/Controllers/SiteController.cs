@@ -58,21 +58,12 @@ public class SiteController : ControllerBase
         return Ok(result);
     }
 
-    // /// <summary>
-    // /// Récupère un site par son nom
-    // /// </summary>
-    // [HttpGet]
-    // [Route("name/{label}")]
-    // public async Task<IActionResult> GetByLabel(string label)
-    // {
-    //     return Ok();
-    // }
 
-    // /// <summary>
-    // /// Créer un type d'alcool
-    // /// </summary>
-    // // [Authorize(Roles = "Admin")]
-    [HttpPost]
+  // /// <summary>
+  // /// Créer un type d'alcool
+  // /// </summary>
+  // // [Authorize(Roles = "Admin")]
+  [HttpPost, Authorize]
     public async Task<IActionResult> Add(SiteDToRegister request)
     {
         var checkAvailability = await _siteService.CheckNameAvailability(request);
@@ -85,11 +76,11 @@ public class SiteController : ControllerBase
         return Ok(result);
     }
 
-    // /// <summary>
-    // /// Met à jour un type d'alcool
-    // /// </summary>
-    // // [Authorize(Roles = "Admin")]
-    [HttpPut]
+  // /// <summary>
+  // /// Met à jour un type d'alcool
+  // /// </summary>
+  // // [Authorize(Roles = "Admin")]
+  [HttpPut, Authorize]
     [Route("{id}")]
     public async Task<IActionResult> Update(int id, SiteDToUpdate request)
     {
@@ -108,7 +99,7 @@ public class SiteController : ControllerBase
     // /// </summary>
     // // [Authorize(Roles = "Admin")]
     [HttpDelete]
-    [Route("{id}")]
+  [Route("{id}"), Authorize]
     public async Task<IActionResult> Delete(int id)
     {
 
