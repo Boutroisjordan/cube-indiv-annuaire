@@ -79,5 +79,17 @@
         <member name="M:BlazorApp.Server.Migrations.yesBro.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
             <inheritdoc />
         </member>
+        <member name="T:BlazorApp.Server.Migrations.moreData">
+            <inheritdoc />
+        </member>
+        <member name="M:BlazorApp.Server.Migrations.moreData.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:BlazorApp.Server.Migrations.moreData.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:BlazorApp.Server.Migrations.moreData.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
     </members>
 </doc>

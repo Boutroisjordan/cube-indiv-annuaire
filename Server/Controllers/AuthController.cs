@@ -62,58 +62,6 @@ public class AuthController : ControllerBase
 
 
     // /// <summary>
-    // /// Récupère tous les types d'alcool
-    // /// </summary>
-    // [HttpGet]
-    // [Route("{id}")]
-    // public async Task<IActionResult> GetById(int id)
-    // {
-    //     var result = await _userService.GetById(id);
-
-    //     return Ok(result);
-    // }
-
-    // /// <summary>
-    // /// Récupère un site par son nom
-    // /// </summary>
-    // [HttpGet]
-    // [Route("name/{label}")]
-    // public async Task<IActionResult> GetByLabel(string label)
-    // {
-    //     return Ok();
-    // }
-
-    // /// <summary>
-    // /// Créer un type d'alcool
-    // /// </summary>
-    // // [Authorize(Roles = "Admin")]
-    // [HttpPost]
-    // public async Task<IActionResult> Add(SalarierDToRegister request)
-    // {
-    //     // var checkAvailability = await _userService.CheckNameAvailability(request);
-
-    //     // if(!checkAvailability) {
-    //     //     return BadRequest($"Site with name '{request.Name}' already exist.");
-    //     // }
-    //     var result = await _userService.Create(request);
-        
-    //     return Ok(result);
-    // }
-
-    // /// <summary>
-    // /// Met à jour un type d'alcool
-    // /// </summary>
-    // // [Authorize(Roles = "Admin")]
-    // [HttpPut]
-    // [Route("{id}")]
-    // public async Task<IActionResult> Update(int id, Site request)
-    // {
-
-
-    //     return Ok();
-    // }
-
-    // /// <summary>
     // /// Supprime le site
     // /// </summary>
     // // [Authorize(Roles = "Admin")]
